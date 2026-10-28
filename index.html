@@ -55,6 +55,7 @@
   #toast { position: absolute; left: 50%; bottom: 1.2em; transform: translateX(-50%); background: rgba(20,15,42,.9); color: #fff; border: 2px solid #8b6cff;
     padding: .35em 1em; border-radius: 2em; font-weight: 700; display: none; z-index: 4; pointer-events: none; white-space: nowrap; }
   #toast.show { display: block; }
+  body.in-boss #toast { bottom: auto; top: calc(var(--st) + 4.1em); }
 
   /* overlays */
   #overlay { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(10,8,24,.6); z-index: 6; }
@@ -150,7 +151,7 @@
   #tZap { position: absolute; right: calc(var(--sr) + var(--tg)); bottom: calc(var(--sb) + var(--tg) * 1.4); width: calc(var(--tb) * 1.2); height: calc(var(--tb) * 1.2);
     border-radius: 50%; pointer-events: auto; touch-action: none; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff;
     font-weight: 900; font-size: calc(var(--tb) * .42); background: rgba(46,230,166,.45); border: 3px solid rgba(255,255,255,.75); box-shadow: 0 4px 0 rgba(0,0,0,.3); }
-  #tZap small { font-size: .32em; letter-spacing: .05em; }
+  #tZap small { font-size: .36em; letter-spacing: .12em; font-family: Verdana, "DejaVu Sans", Tahoma, Arial, sans-serif; font-weight: 700; margin-top: .1em; }
   #tZap.on { background: rgba(46,230,166,.9); transform: translateY(2px); }
   body.dev-phone #joy { background: rgba(20,15,42,.22); }
   #tPause { display: none; }
@@ -159,6 +160,27 @@
   body.dev-phone #rname, body.dev-phone #hint { display: none; }
   body.dev-phone .card { width: 95%; max-height: 97%; padding: .7em .9em; }
   body.dev-phone .card h1 { font-size: 2em; }
+  /* compact code panel for short landscape screens (e.g. a phone held sideways, 844x390): code on the left,
+     options + Hint/Walk away on the right, so option 4 and the Hint button are visible without scrolling */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .card.term { width: 97%; max-height: 98%; padding: .45em .7em; line-height: 1.25; font-size: .88em; }
+    .card.term .tp { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: .3em .9em; align-items: start; text-align: left; }
+    .card.term .tp.ord { grid-template-columns: minmax(0, .8fr) minmax(0, 1.5fr); }
+    .card.term h2 { font-size: 1.15em; margin: 0 0 .15em; }
+    .card.term p { margin: .15em 0; }
+    .card.term .muted { font-size: .8em; }
+    .card.term pre.prog { margin: .25em 0 0; font-size: .92em; }
+    .card.term .opts { gap: .3em; margin-top: .25em; }
+    .card.term .opt { min-height: 40px; padding: .25em .35em; }
+    .card.term #fb { margin-top: .2em; min-height: 0; font-size: .9em; }
+    .card.term .hintp { display: flex; gap: .5em; margin: .25em 0 0; }
+    .card.term .hintp .btn, .card.term .runp .btn { min-height: 40px; padding: .3em .9em; font-size: .95em; }
+    .card.term .cols { gap: .5em; }
+    .card.term .cols h3 { margin: 0 0 .15em; font-size: .9em; }
+    .card.term .slots, .card.term .pool { gap: .25em; padding: .3em; min-height: 4em; }
+    .card.term .ln { min-height: 36px; padding: .2em .45em; }
+    .card.term .runp { margin: .25em 0 0; }
+  }
 
   /* ---------- orientation prompts ---------- */
   #rotate { position: fixed; inset: 0; z-index: 20; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1em;
@@ -505,13 +527,13 @@ const DUNGEONS = [
           '#........................#',
           '#........................#',
           '#.....c............c.....#',
-          '#..h........T..........h.#',
-          '#........................#',
+          '#..h...................h.#',
+          '#.....T..................#',
           '#.........c.P.c..........#',
           '##########################',
         ],
         door: { lock: 'boss', title: 'The Boss Door', story: 'Beat the Big Bug to open this door!' },
-        // terminals are matched to T tiles in map order (top-left, top-right, bottom)
+        // terminals are matched to T tiles in map order (top-left, top-right, bottom one at (6,12) – moved off the boss's column in v1.0.1, well below the boss's reach (rows 3-7) and clear of the phone joystick)
         terminals: [
           { type: 'blank', label: 'Eye terminal', goal: 'Show the weak point ONLY when shield is "down"', uses: ['let', 'if', '===', 'string', 'showWeakPoint'],
             code: ['let shield = "down";', 'if (shield === ___) {', '  showWeakPoint("eye");', '}'], blankLine: 1, was: 'down',
@@ -824,57 +846,147 @@ function syncFsUi() {
 ['fullscreenchange', 'webkitfullscreenchange'].forEach(t => document.addEventListener(t, () => { syncFsUi(); resizeSoon(); }));
 
 // ======================================================================
-//  AUDIO (WebAudio synth, no files) + persistent mute
+//  AUDIO – Pixel's music + sound-effect files (audio/ next to index.html), played with Web Audio.
+//  Music loads lazily (only the track that is needed) and loops gaplessly from an AudioBuffer.
+//  Every SFX falls back to the old synth beep while its file is loading or if it failed to load.
+//  One master gain covers music + SFX; the mute setting persists in localStorage (bh_muted).
+//  Nothing is created or played until the first user gesture (browser autoplay rules).
 // ======================================================================
-let actx = null, muted = false;
+let actx = null, muted = false, master = null, musicBus = null, gestured = false;
 try { muted = localStorage.getItem('bh_muted') === '1'; } catch (e) {}
 const soundLabel = () => `🔊 Sound: ${muted ? 'off' : 'on'}`;
+const AUDIO_DIR = 'audio/';
+// loop length in samples at 44.1 kHz (from Pixel's masters) so a decoder that keeps the mp3 encoder padding still loops seamlessly
+const MUSIC = {
+  dungeon: { file: 'bug-hunters-dungeon-music.mp3', samples: 1459862, vol: 0.5 },
+  boss:    { file: 'bug-hunters-boss-music.mp3',    samples: 1323000, vol: 0.5 },
+};
+const SFX_FILES = { zap: 'bh-zap', squash: 'bh-squash', key: 'bh-key-pickup', door: 'bh-door-open', good: 'bh-fix-right', bad: 'bh-fix-wrong',
+  hurt: 'bh-player-hurt', bossHit: 'bh-boss-hit', bossDie: 'bh-boss-defeat' };
+const AUD = { buf: {}, state: {}, music: { want: null, playing: null, src: null, gain: null }, log: [] }; // state: loading | ok | failed
 function setMuted(v) {
   muted = !!v;
   try { localStorage.setItem('bh_muted', muted ? '1' : '0'); } catch (e) {}
+  if (master && actx) { const t = actx.currentTime; master.gain.cancelScheduledValues(t); master.gain.setTargetAtTime(muted ? 0 : 1, t, 0.03); }
   const b = document.getElementById('bMute'); if (b) b.textContent = soundLabel();
+  if (!muted) syncMusic();
 }
 function audio() {
-  if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
-  if (actx.state === 'suspended') actx.resume();
+  if (!actx) {
+    actx = new (window.AudioContext || window.webkitAudioContext)();
+    master = actx.createGain(); master.gain.value = muted ? 0 : 1; master.connect(actx.destination);
+    musicBus = actx.createGain(); musicBus.gain.value = 1; musicBus.connect(master);
+  }
+  if (actx.state === 'suspended' && gestured && !document.hidden) { const p = actx.resume(); if (p && p.catch) p.catch(() => {}); }
   return actx;
 }
+// fetch + decode one file into AUD.buf[key]; resolves to the buffer or null on failure (never throws)
+function loadBuf(key, url) {
+  if (AUD.state[key] === 'ok') return Promise.resolve(AUD.buf[key]);
+  if (AUD.state[key] === 'loading') return AUD['p_' + key];
+  if (AUD.state[key] === 'failed') return Promise.resolve(null);
+  if (location.protocol === 'file:') { AUD.state[key] = 'failed'; AUD.log.push('skipped ' + url + ' (file:// page – browsers block fetch, using beeps)'); return Promise.resolve(null); }
+  AUD.state[key] = 'loading';
+  const a = audio();
+  const p = fetch(url).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
+    .then(ab => new Promise((res, rej) => { const q = a.decodeAudioData(ab, res, rej); if (q && q.catch) q.catch(rej); }))
+    .then(buf => { AUD.buf[key] = buf; AUD.state[key] = 'ok'; AUD.log.push('loaded ' + url); return buf; })
+    .catch(e => { AUD.state[key] = 'failed'; AUD.log.push('failed ' + url + ': ' + (e && e.message)); return null; });
+  AUD['p_' + key] = p; return p;
+}
+function loadSfx() { for (const k in SFX_FILES) loadBuf('sfx_' + k, AUDIO_DIR + 'sfx/' + SFX_FILES[k] + '.mp3'); }
+// play a decoded SFX file; returns false if it isn't ready (caller then plays the beep fallback)
+function playFile(k, vol = 0.9) {
+  if (muted) return true;
+  const buf = AUD.buf['sfx_' + k]; if (!buf || !actx) return false;
+  try { const a = audio(), s = a.createBufferSource(), g = a.createGain(); g.gain.value = vol; s.buffer = buf; s.connect(g); g.connect(master); s.start(); return true; } catch (e) { return false; }
+}
+// which track should be playing right now: boss room → boss, any other room → dungeon, title/no room → none
+function wantedTrack() { const L = typeof G !== 'undefined' && G.room; if (!L) return null; if (L.R.boss) return L.boss && L.boss.hp <= 0 ? null : 'boss'; return 'dungeon'; }
+function syncMusic() {
+  const want = wantedTrack(); AUD.music.want = want;
+  if (!gestured || !actx) return;              // music only after the first user gesture
+  const M = AUD.music;
+  if (M.playing === want || (M.pending === want && !M.src)) return;
+  if (M.src) { const old = M.src, og = M.gain, t = actx.currentTime; try { og.gain.setTargetAtTime(0, t, 0.15); old.stop(t + 0.8); } catch (e) {} M.src = null; M.gain = null; }
+  M.playing = null;
+  if (!want || muted || AUD.state['music_' + want] === 'failed') return; // muted: don't even download the track until sound is turned on
+  const T = MUSIC[want]; M.pending = want;
+  loadBuf('music_' + want, AUDIO_DIR + T.file).then(buf => {
+    if (AUD.music.pending === want) AUD.music.pending = null;
+    if (!buf || AUD.music.want !== want || AUD.music.playing || muted) return;
+    try {
+      const a = audio(), s = a.createBufferSource(), g = a.createGain();
+      s.buffer = buf; s.loop = true;
+      const len = T.samples / 44100, extra = buf.duration - len;
+      if (extra > 0.002) { s.loopStart = Math.min(extra, 1105 / 44100); s.loopEnd = s.loopStart + len; } // decoder kept the LAME padding
+      else { s.loopStart = 0; s.loopEnd = buf.duration; }
+      g.gain.value = 0; g.gain.setTargetAtTime(T.vol, a.currentTime, 0.2);
+      s.connect(g); g.connect(musicBus); s.start(0, s.loopStart);
+      AUD.music.src = s; AUD.music.gain = g; AUD.music.playing = want;
+    } catch (e) { AUD.log.push('music error ' + e.message); }
+  });
+}
+// first user gesture: create/resume the AudioContext, start loading SFX, start the right music
+function onGesture() {
+  const first = !gestured; gestured = true;
+  try { audio(); } catch (e) { return; }
+  if (first) loadSfx();
+  syncMusic();
+}
+['pointerdown', 'pointerup', 'touchend', 'click', 'keydown'].forEach(t => addEventListener(t, onGesture, { capture: true, passive: true }));
+document.addEventListener('visibilitychange', () => { if (!actx) return; if (document.hidden) { const p = actx.suspend(); if (p && p.catch) p.catch(() => {}); } else if (gestured) { const p = actx.resume(); if (p && p.catch) p.catch(() => {}); } });
 function beep(freq, dur = 0.1, type = 'square', vol = 0.06, slide = 0, delay = 0) {
-  if (muted) return;
+  if (muted || !gestured) return;
   try {
     const a = audio(), o = a.createOscillator(), g = a.createGain(), t = a.currentTime + delay;
     o.type = type; o.frequency.setValueAtTime(freq, t);
     if (slide) o.frequency.exponentialRampToValueAtTime(Math.max(40, freq + slide), t + dur);
     g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    o.connect(g); g.connect(a.destination); o.start(t); o.stop(t + dur + 0.02);
+    o.connect(g); g.connect(master); o.start(t); o.stop(t + dur + 0.02);
   } catch (e) { }
 }
 function noise(dur = 0.3, vol = 0.05, freq = 800, delay = 0) {
-  if (muted) return;
+  if (muted || !gestured) return;
   try {
     const a = audio(), n = Math.floor(a.sampleRate * dur), buf = a.createBuffer(1, n, a.sampleRate), d = buf.getChannelData(0);
     for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
     const src = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain(), t = a.currentTime + delay;
     f.type = 'lowpass'; f.frequency.value = freq; g.gain.value = vol;
-    src.buffer = buf; src.connect(f); f.connect(g); g.connect(a.destination); src.start(t);
+    src.buffer = buf; src.connect(f); f.connect(g); g.connect(master); src.start(t);
   } catch (e) { }
 }
-const SFX = {
-  coin: () => { beep(988, 0.07); beep(1319, 0.12, 'square', 0.06, 0, 0.06); },
+// the original synth beeps: still used for sounds without a file, and as the fallback for those with one
+const BEEP = {
   zap: () => beep(1400, 0.12, 'sawtooth', 0.035, -1000),
   squash: () => { beep(260, 0.12, 'square', 0.06, -180); noise(0.12, 0.05, 1200); },
+  key: () => { beep(1800, 0.05, 'triangle', 0.05); beep(1200, 0.08, 'triangle', 0.04, 0, 0.04); },
   hurt: () => beep(180, 0.3, 'sawtooth', 0.06, -120),
-  heart: () => [660, 880, 1100].forEach((f, i) => beep(f, 0.1, 'triangle', 0.07, 0, i * 0.07)),
   good: () => [523, 659, 784, 1047].forEach((f, i) => beep(f, 0.14, 'triangle', 0.08, 0, i * 0.09)),
   bad: () => { beep(200, 0.2, 'sawtooth', 0.05); beep(150, 0.25, 'sawtooth', 0.05, 0, 0.15); },
+  door: () => { noise(1.0, 0.07, 400); [392, 523, 659, 784, 1047, 1319].forEach((f, i) => beep(f, 0.2, 'triangle', 0.07, 0, 0.15 + i * 0.08)); beep(2093, 0.5, 'sine', 0.04, 0, 0.7); },
+  bossHit: () => { beep(320, 0.15, 'square', 0.07, -200); noise(0.15, 0.06, 900); },
+  bossDie: () => { noise(1.2, 0.09, 600); [523, 659, 784, 1047, 784, 1047, 1319].forEach((f, i) => beep(f, 0.18, 'triangle', 0.08, 0, 0.3 + i * 0.1)); },
+};
+const AUD_STATS = { file: 0, beep: 0 }; // counts (used by the tests)
+const sfx = k => () => { if (muted || !gestured) return; if (playFile(k)) AUD_STATS.file++; else { AUD_STATS.beep++; BEEP[k](); } };
+const SFX = {
+  coin: () => { beep(988, 0.07); beep(1319, 0.12, 'square', 0.06, 0, 0.06); },
+  zap: sfx('zap'),
+  squash: sfx('squash'),
+  hurt: sfx('hurt'),
+  heart: () => [660, 880, 1100].forEach((f, i) => beep(f, 0.1, 'triangle', 0.07, 0, i * 0.07)),
+  good: sfx('good'),
+  bad: sfx('bad'),
+  key: sfx('key'),
   click: () => beep(700, 0.04, 'square', 0.03),
   clink: () => { beep(1800, 0.05, 'triangle', 0.05); beep(1200, 0.08, 'triangle', 0.04, 0, 0.04); },
   locked: () => { beep(140, 0.12, 'square', 0.05); beep(110, 0.15, 'square', 0.05, 0, 0.1); },
   torch: () => { noise(0.25, 0.06, 2500); beep(600, 0.15, 'triangle', 0.05, 300); },
-  door: () => { noise(1.0, 0.07, 400); [392, 523, 659, 784, 1047, 1319].forEach((f, i) => beep(f, 0.2, 'triangle', 0.07, 0, 0.15 + i * 0.08)); beep(2093, 0.5, 'sine', 0.04, 0, 0.7); },
-  bossHit: () => { beep(320, 0.15, 'square', 0.07, -200); noise(0.15, 0.06, 900); },
+  door: sfx('door'),
+  bossHit: sfx('bossHit'),
   bossBreak: () => { noise(0.5, 0.08, 1500); [880, 660, 1320].forEach((f, i) => beep(f, 0.15, 'square', 0.05, 0, i * 0.08)); },
-  bossDie: () => { noise(1.2, 0.09, 600); [523, 659, 784, 1047, 784, 1047, 1319].forEach((f, i) => beep(f, 0.18, 'triangle', 0.08, 0, 0.3 + i * 0.1)); },
+  bossDie: sfx('bossDie'),
   clang: () => { beep(900, 0.06, 'square', 0.04); beep(600, 0.1, 'triangle', 0.04, 0, 0.05); },
   spit: () => beep(300, 0.18, 'sawtooth', 0.04, 200),
   win: () => [523, 659, 784, 659, 784, 1047].forEach((f, i) => beep(f, 0.16, 'triangle', 0.08, 0, i * 0.11)),
@@ -894,6 +1006,8 @@ function loadSave() {
 function saveGame() { try { localStorage.setItem('bh_save', JSON.stringify(G.save)); } catch (e) { } }
 const totalCoins = () => Object.values(G.save.rooms).reduce((a, r) => a + (r.coins || 0), 0);
 
+// clear, wide sans-serif for canvas text: Verdana/DejaVu have an unmistakable Z (no 2-like curve)
+const UI_FONT = 'Verdana, "DejaVu Sans", Tahoma, Arial, sans-serif';
 
 // ======================================================================
 //  CORE GAME
@@ -925,7 +1039,7 @@ function safeInsets() {
 function resize() {
   const W = innerWidth, H = innerHeight, S = safeInsets(), wrap = $('wrap');
   wrap.style.width = W + 'px'; wrap.style.height = H + 'px';
-  const dpr = Math.min(2, devicePixelRatio || 1);
+  const dpr = Math.min(3, devicePixelRatio || 1); // 3x phones get 1:1 pixels, so small canvas text (e.g. "ZAP") isn't upscaled into blobs
   cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
   const minSide = Math.min(W, H), phone = DEV.type === 'phone', rs = document.documentElement.style;
   wrap.style.fontSize = Math.max(12, Math.min(18, minSide / (phone ? 26 : 40))) + 'px';
@@ -1019,6 +1133,8 @@ function buildRoom(k) {
   L.hero = { x: L.start.x, y: L.start.y, w: 24, h: 24, dir: 'up', f: 0, hp: 3, inv: 0, cd: 0, moving: false };
   L.torches.sort((a, b) => a.x - b.x);
   L.total = L.coins.length;
+  const rec = G.save && G.save.rooms[R.id];
+  if (!R.boss && rec && rec.doorOpen && L.doors.length) { L.open = true; L.solved = true; L.lit = L.torches.map(() => true); } // door already opened this attempt: it stays open
   return L;
 }
 function newBug(x, y, fly) { return { x, y, w: 26, h: 26, vx: 0, vy: 0, dir: 1, tm: 0, fly: !!fly }; }
@@ -1112,7 +1228,7 @@ const fixedProgram = (S, t) => S.code.map((l, i) => S.type === 'pick' ? (i === S
 // one fix-the-code step (pick a line / fill a blank / reorder lines). onRight() is called when the program passes.
 function stepPanel(S, head, onRight, onLeave) {
   G.mode = 'door';
-  const fb = `<p id="fb" class="muted"></p><p><button class="btn alt" id="bHint">💡 Hint</button> <button class="btn alt" id="bLeave">Walk away</button></p>`;
+  const fb = `<p id="fb" class="muted"></p><p class="hintp"><button class="btn alt" id="bHint">💡 Hint</button> <button class="btn alt" id="bLeave">Walk away</button></p>`;
   const wrong = why => { SFX.bad(); const f = $('fb'); f.className = 'bad'; f.innerHTML = `🤔 Not quite! ${why || 'That code still has a bug.'}<br><span class="muted">💡 Hint: ${S.hint || 'Read each line slowly.'}</span>`; };
   const right = () => { SFX.good(); onRight(); };
   const wire = () => {
@@ -1122,8 +1238,9 @@ function stepPanel(S, head, onRight, onLeave) {
   if (S.type === 'pick' || S.type === 'blank') {
     const codeLines = S.code.map((l, i) => `<span class="l ${i === (S.type === 'pick' ? S.bugLine : S.blankLine) ? 'bug' : ''}"><span class="no">${i + 1}</span>${hl(l).replace('___', '<span class="blank">?</span>')}</span>`).join('');
     const opts = shuffle(S.opts);
-    showCard(`${head}<pre class="prog">${codeLines}</pre><p>${S.type === 'pick' ? 'Pick the fixed line' : 'Pick what goes in the <span class="blank">?</span>'} with ${ctl('{pick}')}:</p>
-      <div class="opts">${opts.map((o, i) => `<button class="opt" data-n="${i + 1}" data-i="${i}"><span class="n">${i + 1}</span><code>${hl(o.t)}</code></button>`).join('')}</div>${fb}`, 'term');
+    // .tp/.tpL/.tpR: one column normally; side by side on short landscape screens (phone held sideways) so nothing needs scrolling
+    showCard(`<div class="tp"><div class="tpL">${head}<pre class="prog">${codeLines}</pre></div><div class="tpR"><p class="pickp">${S.type === 'pick' ? 'Pick the fixed line' : 'Pick what goes in the <span class="blank">?</span>'} with ${ctl('{pick}')}:</p>
+      <div class="opts">${opts.map((o, i) => `<button class="opt" data-n="${i + 1}" data-i="${i}"><span class="n">${i + 1}</span><code>${hl(o.t)}</code></button>`).join('')}</div>${fb}</div></div>`, 'term');
     document.querySelectorAll('.opt[data-i]').forEach(b => b.onclick = () => {
       const o = opts[+b.dataset.i];
       if (runOk(fixedProgram(S, o.t), S.check)) { b.classList.add('right'); right(); } else { b.classList.add('wrong'); wrong(o.why); }
@@ -1133,9 +1250,9 @@ function stepPanel(S, head, onRight, onLeave) {
     let pool = shuffle(S.lines.map((t, i) => ({ t, i }))); if (pool.every((p, i) => p.i === i) && pool.length > 1) pool.reverse();
     const prog = [];
     const draw = () => {
-      showCard(`${head}<p>${ctl('{orderHow}')}</p><div class="cols"><div><h3>Jumbled lines</h3><div class="pool">${pool.map((p, i) => `<button class="ln" data-n="${i + 1}" data-p="${i}"><span class="n">${i + 1}</span>${hl(p.t)}</button>`).join('') || '<span class="empty">All used ✓</span>'}</div></div>
+      showCard(`<div class="tp ord"><div class="tpL">${head}<p class="pickp">${ctl('{orderHow}')}</p></div><div class="tpR"><div class="cols"><div><h3>Jumbled lines</h3><div class="pool">${pool.map((p, i) => `<button class="ln" data-n="${i + 1}" data-p="${i}"><span class="n">${i + 1}</span>${hl(p.t)}</button>`).join('') || '<span class="empty">All used ✓</span>'}</div></div>
         <div><h3>Your program</h3><div class="slots">${prog.map((p, i) => `<button class="ln" data-s="${i}">${hl(p.t)}</button>`).join('') || '<span class="empty">Tap lines to add them</span>'}</div></div></div>
-        <p><button class="btn go" id="bRun" ${pool.length ? 'disabled' : ''}>▶ Run</button></p>${fb}`, 'term');
+        <p class="runp"><button class="btn go" id="bRun" ${pool.length ? 'disabled' : ''}>▶ Run</button></p>${fb}</div></div>`, 'term');
       document.querySelectorAll('[data-p]').forEach(b => b.onclick = () => { SFX.click(); prog.push(pool.splice(+b.dataset.p, 1)[0]); draw(); });
       document.querySelectorAll('[data-s]').forEach(b => b.onclick = () => { pool.push(prog.splice(+b.dataset.s, 1)[0]); draw(); });
       $('bRun').onclick = () => { if (runOk(prog.map(p => p.t).join('\n'), S.check)) right(); else wrong('The lines are in the wrong order, so the program does the wrong thing. Tap your program lines to take them back.'); };
@@ -1151,21 +1268,27 @@ function doorPanel(si) {
   const head = `<div class="muted">${D.title} · bug ${si + 1} of ${steps.length}</div><h2>${D.title}</h2>${si === 0 ? `<p>${D.story}</p>` : ''}<p class="goal">🎯 ${S.goal}</p>`;
   stepPanel(S, head, () => { toast('✅ Bug fixed!'); doorPanel(si + 1); });
 }
+const termsLocked = L => !!(L.boss && L.boss.hp > 0 && L.boss.exposed > 0); // weak point open → terminals are disabled
 function termPanel(ti) {
   const L = G.room, T = L.terms[ti], S = L.R.terminals[ti];
+  if (!T || T.fixed || termsLocked(L)) return;
   const n = L.terms.filter(t => t.fixed).length;
   const head = `<div class="muted">Boss terminal ${ti + 1} of ${L.terms.length} · ${n} fixed</div><h2>💻 ${S.label}</h2><p>Fix this code to crack the Big Bug's armour!</p><p class="goal">🎯 ${S.goal}</p>`;
   stepPanel(S, head, () => {
     T.fixed = true; hideCard(); G.mode = 'play';
     const B = L.boss; if (B && B.hp > 0) {
-      B.exposed += B.per; B.state = 'dizzy'; B.st = 0; SFX.bossBreak();
-      floatText(B.x + 64, B.y + 10, '💥 Armour cracked! ZAP the weak point!', '#ffd23f');
+      B.exposed = Math.min(B.per, B.hp); /* set, never add: one fix = one window of at most 3 hits */ B.state = 'dizzy'; B.st = 0; SFX.bossBreak();
+      floatText(B.x + 64, bossFloatY(B), '💥 Armour cracked! ZAP the weak point!', '#ffd23f');
       toast('💥 The Big Bug is dizzy! Zap the glowing weak point!', 2.6);
     }
   });
 }
+function saveDoorOpen(L) { // remember the opened door (rooms 1-4) so dying/reloading doesn't lock it again
+  if (isBossRoom(L)) return;
+  const id = L.R.id; G.save.rooms[id] = Object.assign({}, G.save.rooms[id] || {}, { doorOpen: true }); saveGame();
+}
 function doorOpened() {
-  const L = G.room; L.solved = true; hideCard(); G.mode = 'play';
+  const L = G.room; L.solved = true; saveDoorOpen(L); hideCard(); G.mode = 'play';
   if (L.torches.length) { // Torch Hall: run the fixed loop visibly, one torch per go
     L.loop = { i: 0, t: 0.5, n: L.torches.length };
     toast('🔁 Running your loop…', 2);
@@ -1219,16 +1342,17 @@ function dungeonComplete(di) {
 // fixing a terminal makes it dizzy: it stands still with its weak point showing until zapped `per` times.
 function newBoss(L, tx, ty) {
   const R = L.R, hp = (R.boss && R.boss.hp) || 9, nT = R.terminals ? R.terminals.length : 3;
-  return { x: tx * TILE + 16 - 64, y: ty * TILE + 16 - 80, baseY: ty * TILE + 16 - 80, hp, max: hp, per: Math.ceil(hp / nT), exposed: 0,
+  return { x: tx * TILE + 16 - 64, y: ty * TILE + 16 - 80, baseY: ty * TILE + 16 - 80, hp, max: hp, per: Math.min(3, Math.ceil(hp / nT)), exposed: 0,
     state: 'walk', st: 2.5, vx: 40, atk: 0, flash: 0, dead: 0, plink: 0 };
 }
+const bossFloatY = B => B.y + 150; // boss messages float up from under its feet (the boss-room toast sits at the top)
 const bossBox = B => ({ x: B.x + 22, y: B.y + 44, w: 84, h: 76 });
 function updateBoss(L, dt) {
   const B = L.boss, h = L.hero; if (!B) return;
   B.flash -= dt; B.plink -= dt;
   if (B.hp <= 0) { B.dead += dt; if (B.dead > 1.6 && G.mode === 'play' && !L.solved) bossBeaten(); return; }
   B.st -= dt;
-  if (B.state === 'dizzy') { if (B.exposed <= 0) { B.state = 'walk'; B.st = 2.5; } }
+  if (B.state === 'dizzy') { if (B.exposed <= 0) { B.state = 'walk'; B.st = 2.0; } }
   else if (B.state === 'walk') {
     const tx = h.x + 12 - (B.x + 64); B.vx += Math.sign(tx) * 30 * dt; B.vx = Math.max(-45, Math.min(45, B.vx));
     B.x += B.vx * dt; if (B.x < 80 || B.x > L.W * TILE - 208) { B.x = Math.max(80, Math.min(L.W * TILE - 208, B.x)); B.vx = -B.vx; }
@@ -1239,13 +1363,13 @@ function updateBoss(L, dt) {
       const cx = B.x + 64, cy = B.y + 90;
       if (B.atk % 2 === 0) { // spit 3 slow goo balls toward the hero
         const a = Math.atan2(h.y + 12 - cy, h.x + 12 - cx);
-        for (const d of [-0.35, 0, 0.35]) L.orbs.push({ x: cx - 6, y: cy - 6, w: 12, h: 12, vx: Math.cos(a + d) * 95, vy: Math.sin(a + d) * 95, life: 6 });
+        for (const d of [-0.35, 0, 0.35]) L.orbs.push({ x: cx - 6, y: cy - 6, w: 12, h: 12, vx: Math.cos(a + d) * 118, vy: Math.sin(a + d) * 118, life: 5 });
         SFX.spit();
       } else if (L.bugs.length < 3) { // call one little fly bug
         const b = newBug(cx - 13, cy + 8, true); if (!hitsWall(L, b, b.x, b.y)) L.bugs.push(b);
         floatText(cx, B.y + 4, 'Bzzz!', '#9fd8ff');
       }
-      B.atk++; B.state = 'walk'; B.st = 2.6 + Math.random();
+      B.atk++; B.state = 'walk'; B.st = 1.9 + Math.random() * 0.8;
     }
   }
   if (h.inv <= 0 && overlap(h, bossBox(B), 84, 76)) { hurtHero(L); moveObj(L, h, 0, 40); }
@@ -1254,11 +1378,11 @@ function hitBoss(L, s) {
   const B = L.boss;
   if (B.exposed > 0) {
     B.hp--; B.exposed--; B.flash = 0.35; SFX.bossHit();
-    floatText(B.x + 64, B.y + 10, B.hp > 0 ? (B.exposed > 0 ? `Ouch! ${B.exposed} more!` : 'Armour is back! Fix another terminal!') : 'NOOOO!', '#ffd23f');
+    floatText(B.x + 64, bossFloatY(B), B.hp > 0 ? (B.exposed > 0 ? `Ouch! ${B.exposed} more!` : 'Armour is back! Fix another terminal!') : 'NOOOO!', '#ffd23f');
     if (B.hp <= 0) { B.exposed = 0; SFX.bossDie(); L.bugs.forEach(b => b.dead = true); L.orbs = []; L.zapped++; }
   } else if (B.plink <= 0) {
     B.plink = 0.6; SFX.clang();
-    floatText(B.x + 64, B.y + 10, '🛡️ Clang! Fix a terminal first', '#9fd8ff');
+    floatText(B.x + 64, bossFloatY(B), '🛡️ Clang! Fix a terminal first', '#9fd8ff');
   }
 }
 function bossBeaten() {
@@ -1283,11 +1407,12 @@ function hurtHero(L) {
   if (isBossRoom(L)) { // forgiving: keep fixed terminals and boss damage, just go back to the start
     h.hp = 3; h.inv = 2; h.x = L.start.x; h.y = L.start.y; L.orbs = []; L.bugs = L.bugs.filter(b => !b.fly);
     toast('Ouch! Back to the start. Your fixes are saved!', 2.4); hud();
-  } else { toast('Ouch! The bugs got you. Room restarted.', 2); const k = G.k; G.room = buildRoom(k); hud(); }
+  } else { const k = G.k; G.room = buildRoom(k); toast(G.room.open ? 'Ouch! The bugs got you. Room restarted – your door stays open!' : 'Ouch! The bugs got you. Room restarted.', 2.2); hud(); }
 }
 let doorMsgT = 0;
 function update(dt) {
   document.body.classList.toggle('st-play', G.mode === 'play');
+  document.body.classList.toggle('in-boss', isBossRoom(G.room));
   G.t += dt; const L = G.room; if (!L) return;
   L.floats.forEach(f => { f.t -= dt; f.y -= dt * 18; }); L.floats = L.floats.filter(f => f.t > 0);
   if (G.mode !== 'play') return;
@@ -1298,12 +1423,12 @@ function update(dt) {
   h.moving = m > 0.1;
   if (h.moving) { h.dir = Math.abs(mx) > Math.abs(my) ? (mx > 0 ? 'right' : 'left') : (my > 0 ? 'down' : 'up'); h.f += dt * 8; }
   const hit = moveObj(L, h, mx * 130 * dt, my * 130 * dt);
-  if (hit && hit.c === 'T') { const T = L.terms.find(t => t.x === hit.x && t.y === hit.y); if (T && !T.fixed && L.boss && L.boss.hp > 0) { h.y += 4; return termPanel(T.i); } else if (T && T.fixed && doorMsgT <= 0) { doorMsgT = 1.5; floatText(T.x * TILE + 16, T.y * TILE, '✅ Already fixed', '#2ee6a6'); } }
+  if (hit && hit.c === 'T') { const T = L.terms.find(t => t.x === hit.x && t.y === hit.y); if (T && !T.fixed && termsLocked(L)) { if (doorMsgT <= 0) { doorMsgT = 1.5; SFX.locked(); floatText(T.x * TILE + 16, (T.y + 2) * TILE + 8, '⚡ Zap the weak point first!', '#ffd23f'); } } else if (T && !T.fixed && L.boss && L.boss.hp > 0) { h.y += 4; return termPanel(T.i); } else if (T && T.fixed && doorMsgT <= 0) { doorMsgT = 1.5; floatText(T.x * TILE + 16, T.y * TILE, '✅ Already fixed', '#2ee6a6'); } }
   if (hit && hit.c === 'D' && !L.solved) {
     if (L.R.door.lock === 'boss') { if (doorMsgT <= 0) { doorMsgT = 1.5; SFX.locked(); floatText(hit.x * TILE + 32, TILE * 1.5, '🔒 Beat the Big Bug first!', '#ff6b81'); } }
     else { h.y += 4; return doorPanel(0); }
   }
-  if (L.open && h.y < TILE * 0.6) return isBossRoom(L) ? null : quiz();
+  if (L.open && h.y < TILE * 0.6) { if (isBossRoom(L)) return null; SFX.key(); return quiz(); }
   if (L.loop) {
     L.loop.t -= dt;
     if (L.loop.t <= 0) {
@@ -1372,9 +1497,12 @@ function drawTile(L, x, y, pal) {
   else if (c === 'T') {
     const T = L.terms.find(t => t.x === x && t.y === y);
     const p = 0.5 + Math.sin(G.t * 5) * 0.5;
-    ctx.fillStyle = T && T.fixed ? 'rgba(46,230,166,.28)' : `rgba(255,77,106,${0.18 + 0.2 * p})`; ctx.beginPath(); ctx.ellipse(px + 16, py + 24, 22, 12, 0, 0, 7); ctx.fill();
+    const off = T && !T.fixed && termsLocked(L); // greyed out while the weak point is open
+    ctx.fillStyle = T && T.fixed ? 'rgba(46,230,166,.28)' : off ? 'rgba(150,150,170,.18)' : `rgba(255,77,106,${0.18 + 0.2 * p})`; ctx.beginPath(); ctx.ellipse(px + 16, py + 24, 22, 12, 0, 0, 7); ctx.fill();
+    if (off) { ctx.globalAlpha = 0.4; ctx.filter = 'grayscale(1)'; }
     Sprites.tile(TI.terminal, px, py);
-    ctx.font = 'bold 9px monospace'; ctx.textAlign = 'center'; ctx.fillStyle = T && T.fixed ? '#2ee6a6' : '#ff6b81'; ctx.fillText(T && T.fixed ? 'OK ✓' : 'BUG!', px + 16, py - 3); ctx.textAlign = 'left';
+    ctx.globalAlpha = 1; ctx.filter = 'none';
+    ctx.font = 'bold 9px monospace'; ctx.textAlign = 'center'; ctx.fillStyle = T && T.fixed ? '#2ee6a6' : off ? '#8d8aa8' : '#ff6b81'; ctx.fillText(T && T.fixed ? 'OK ✓' : off ? 'WAIT' : 'BUG!', px + 16, py - 3); ctx.textAlign = 'left';
   }
 }
 function drawDoor(L) {
@@ -1420,10 +1548,10 @@ function drawBossBar(L) {
   const B = L.boss; if (!B) return;
   const w = 300, x = (L.W * TILE - w) / 2, y = (L.H - 1) * TILE + 6;
   ctx.fillStyle = 'rgba(10,8,24,.85)'; ctx.fillRect(x - 4, y - 2, w + 8, 24);
-  ctx.fillStyle = '#fff'; ctx.font = 'bold 10px sans-serif'; ctx.fillText(`👾 ${L.R.boss.name}`, x, y + 9);
+  ctx.fillStyle = '#fff'; ctx.font = 'bold 10px ' + UI_FONT; ctx.fillText(`👾 ${L.R.boss.name}`, x, y + 9);
   const seg = (w - 100) / B.max;
   for (let i = 0; i < B.max; i++) { ctx.fillStyle = i < B.hp ? (B.flash > 0 ? '#fff' : '#ff4d6a') : '#3d3870'; ctx.fillRect(x + 96 + i * seg, y + 2, seg - 3, 14); }
-  ctx.fillStyle = '#c9c6ee'; ctx.font = 'bold 9px sans-serif'; ctx.fillText(B.hp <= 0 ? '💀 beaten!' : B.exposed > 0 ? 'WEAK POINT OPEN!' : '🛡️ armoured', x, y + 19);
+  ctx.fillStyle = '#c9c6ee'; ctx.font = 'bold 9px ' + UI_FONT; ctx.fillText(B.hp <= 0 ? '💀 beaten!' : B.exposed > 0 ? 'WEAK POINT OPEN!' : '🛡️ armoured', x, y + 19);
 }
 function drawLoopPanel(L) {
   if (!L.loop && !(L.lit.length && L.lit.length < L.torches.length)) return;
@@ -1470,12 +1598,12 @@ function render() {
   }
   drawLoopPanel(L);
   if (L.boss) drawBossBar(L);
-  ctx.textAlign = 'center'; ctx.font = 'bold 13px sans-serif'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(10,8,24,.9)';
+  ctx.textAlign = 'center'; ctx.font = 'bold 13px ' + UI_FONT; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(10,8,24,.9)';
   for (const f of L.floats) { ctx.globalAlpha = Math.min(1, f.t * 2); ctx.strokeText(f.txt, f.x, f.y); ctx.fillStyle = f.col; ctx.fillText(f.txt, f.x, f.y); }
   ctx.globalAlpha = 1; ctx.textAlign = 'left';
 }
 let lastT = performance.now();
-function frame(now) { const dt = Math.min(0.05, (now - lastT) / 1000); lastT = now; try { update(dt); render(); } catch (e) { console.error(e); } requestAnimationFrame(frame); }
+function frame(now) { const dt = Math.min(0.05, (now - lastT) / 1000); lastT = now; try { update(dt); render(); if (gestured) syncMusic(); } catch (e) { console.error(e); } requestAnimationFrame(frame); }
 
 // ---------- boot ----------
 G.save = loadSave(); Sprites.load(); resize(); refreshCtl(); syncFsUi();
