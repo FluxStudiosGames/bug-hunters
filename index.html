@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Bug Hunters">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#140f2a">
+<title>Bug Hunters – fix code, zap bugs, learn JavaScript</title>
+<meta name="description" content="A free pixel-art dungeon game for total beginners. Fix the buggy code on each locked door, zap the bugs, and beat the Big Bug – while learning JavaScript.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bug Hunters – learn to code by fixing bugs">
+<meta property="og:description" content="A free pixel-art dungeon game for total beginners. Fix the buggy code on each locked door, zap the bugs, and beat the Big Bug.">
+<meta property="og:url" content="https://fluxstudiosgames.github.io/bug-hunters/">
+<meta property="og:image" content="https://fluxstudiosgames.github.io/bug-hunters/share-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://fluxstudiosgames.github.io/bug-hunters/share-card.png">
+<link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAeklEQVR4nO3WsRHAIAiFYTZIkylSZw73HyFbmAGigAIR715Bqf9XeCqdx1VXDgEAwOiC5y7shACkqAUjAmbjWgQLsMY1iC7AKy4hmgDvOIf4AKLiPQQA9Ge8hQAgF2D5IQQgxVWc4jHyRnCN3B8SK0Kz9x6f0sgBAIAXIiIetsqdgDsAAAAASUVORK5CYII=">
+<link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAOklEQVR4nGMQ4df6TwlmoKkBL0z8wJgkA2CacGG8BhDSjM0QBlI1oxsyagA1DaA4GqmSkKiSlOmeGwH9KsjANFhwOQAAAABJRU5ErkJggg==">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAADRElEQVR4nO3SwY1UQRBEwfVgL1jBGTvw3wS8gBMSWgkxzM7/WZUdh3fvroy3L+9ff0otvaUfIL0yoFUV0KoKaFUFtKoCWlUBraqAVlVAqyqgVRXQqgpoVQW0qgJaVQGtqoBWVUCrKqBVFdCqCmhVBbSqAlpVAa2qgFZVQKsqoFUV0KoK6Cf78e37paX/tzWgH+hqvJC/LqA/lEYL+ecC+n0fYriBrkUM9+Gg09DABhpiuIEG+UzYlaDTYLaU3glokME+AXQaREvpHYGGGeoW0Onh20vvexTo9NinlN65HnR64FNL714JOj3q6aX3rwKdHlN7UI8HnR5Ru1CPBZ0eTjthjwSdHkt7UY8DnR5Ju1GPAp0eR/tRjwGdHkUdqEeATo+hHtRx0OkR1IUaaAENs6aijoFOH12dqCOg08dWL2qgBTTMmor6VtDp46ofNdACGmZNRX0L6PQxNSOgVVUF6PQRNSugVdVq0OnjaWZAq6qVoNNH0+yAVlVAq6pVoNPH0o6AVlVAq6oVoNNH0q6AVlVAq6rRoNPH0c6AVlVAqyqgVRXQqgpoVTUSdPoo2h3QqgpoVQW0qgJaVQGtqoBWVUCrKqBVFdCqCmhVBbSqAlpVAa2qxoGGWs/2SoNAKx7QqgpoVQW0qgJaVY0FDbX+t1f7A1rRgFZV40FDrUe7wh7QigW0qloDGmr9q6vcAa1IQKuqdaCh1t+60hzQur21oKHWx672BrRubT1oqPW7O6wBrduqAQ217nJ2G2ioz+1OY0ALaKg1EXMENNTnlLAFtICGWhMxR0FD3VvSVBQ01H2lPQEtoKHWRMxjQEO9v7SfcaCh3lvazVjQUO8r7WU8aKj3lHayBjTU80v7WAca7JmlPawHDfWc0g5qQEOdL71/HWioYa4DDTbIlaChhrkONNggV4KGGuY60GCDXAka7HMhV4MG+zzIR4AG+xzIR4E+GXf63kCDDTLQcJ+M+M+A/lAaJcSfC+gHSqOF9/GAfjJ4Zwa0qgJaVQGtqoBWVUCrKqBVFdCqCmhVBbSqAlpVAa2qgFZVQKsqoFUV0KoKaFUFtKoCWlUBraqAVlVAqyqgVRXQqgpoVQW0qgJaVQGtqoBWVb8AFnCKHD79vRMAAAAASUVORK5CYII=">
+<style>
+  :root { --ui: 16px; --tb: 84px; --tg: 18px; --sl: 0px; --sr: 0px; --sb: 0px; --st: 0px; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #140f2a; overflow: hidden; overscroll-behavior: none;
+    font-family: "Segoe UI", "Trebuchet MS", system-ui, sans-serif; color: #24264a;
+    -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%; text-size-adjust: 100%; touch-action: manipulation; }
+  body { position: fixed; inset: 0; }
+  #wrap { position: absolute; left: 0; top: 0; overflow: hidden; }
+  #safe { position: fixed; left: 0; top: 0; visibility: hidden; pointer-events: none;
+    padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px); }
+  canvas { display: block; width: 100%; height: 100%; touch-action: none; image-rendering: pixelated; }
+  code, pre { font-family: "Fira Code", Consolas, "Courier New", monospace; font-variant-ligatures: none; font-feature-settings: 'liga' 0, 'calt' 0; }
+  code { background: #24264a; color: #9ef0a6; padding: .05em .35em; border-radius: .3em; font-size: .92em; white-space: nowrap; }
+  pre { margin: 0; background: #1d1b3a; color: #e8e9ff; padding: .6em .8em; border-radius: .5em; text-align: left; font-size: .95em; line-height: 1.4; white-space: pre-wrap; }
+  .kw { color: #ff9ecd; } .str { color: #ffd479; } .num { color: #9fd8ff; } .fn { color: #9ef0a6; } .cm { color: #8a88b0; font-style: italic; }
+
+  /* HUD */
+  #hud { position: absolute; left: 0; top: 0; right: 0; display: none; gap: .5em; align-items: center;
+    padding: .45em .6em; font-size: 1em; pointer-events: none; z-index: 3; }
+  #hud .pill { background: rgba(20,15,42,.82); color: #fff; border: 2px solid #4b3d8f; border-radius: 2em; padding: .2em .75em; font-weight: 700; white-space: nowrap; }
+  #hud .grow { flex: 1; }
+  #hearts { color: #ff4d6a; letter-spacing: .08em; }
+  #coinvar { background: none; color: #ffd23f; padding: 0; }
+  #hint { font-size: .78em; font-weight: 600; opacity: .9; }
+  .hbtn { display: inline-flex; align-items: center; justify-content: center; pointer-events: auto; font: inherit; font-weight: 900; font-size: 1.05em; border: 0; cursor: pointer;
+    min-width: 44px; min-height: 44px; width: 2.5em; height: 2.5em; border-radius: 50%; background: rgba(255,255,255,.93); color: #3a22b0;
+    box-shadow: 0 .15em 0 rgba(0,0,0,.3); padding: 0; touch-action: none; }
+  body.in-keys .hbtn { min-width: 0; min-height: 0; width: 2em; height: 2em; font-size: 1em; }
+  #toast { position: absolute; left: 50%; bottom: 1.2em; transform: translateX(-50%); background: rgba(20,15,42,.9); color: #fff; border: 2px solid #8b6cff;
+    padding: .35em 1em; border-radius: 2em; font-weight: 700; display: none; z-index: 4; pointer-events: none; white-space: nowrap; }
+  #toast.show { display: block; }
+
+  /* overlays */
+  #overlay { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(10,8,24,.6); z-index: 6; }
+  #overlay.show { display: flex; }
+  .card { background: #fffdf6; border: .25em solid #4b3d8f; border-radius: 1em; padding: 1em 1.4em; width: 80%; max-height: 94%; overflow: auto;
+    box-shadow: 0 .4em 0 rgba(0,0,0,.35); text-align: center; line-height: 1.45; -webkit-overflow-scrolling: touch; touch-action: pan-y; }
+  .card h1 { margin: .05em 0 .1em; font-size: 2.6em; color: #e8344e; letter-spacing: .06em; font-family: "Courier New", monospace; text-shadow: .06em .06em 0 #3a22b0; }
+  .card h2 { margin: .1em 0 .35em; font-size: 1.5em; color: #3a22b0; }
+  .card h3 { margin: .5em 0 .2em; font-size: 1.05em; color: #333; }
+  .card p { margin: .35em 0; }
+  .tag { display: inline-block; background: #ffe066; color: #5c4400; font-weight: 800; border-radius: 2em; padding: .1em .8em; font-size: .8em; letter-spacing: .05em; }
+  .row { display: flex; gap: .6em; justify-content: center; flex-wrap: wrap; margin-top: .8em; }
+  .cols { display: flex; gap: 1em; text-align: left; align-items: flex-start; }
+  .cols > div { flex: 1; min-width: 0; }
+  .btn { font: inherit; font-weight: 800; font-size: 1.02em; border: 0; border-radius: .6em; padding: .55em 1.2em; cursor: pointer; min-height: 44px;
+    background: #5a3cf0; color: #fff; box-shadow: 0 .25em 0 #3a22b0; touch-action: manipulation; }
+  .btn:active { transform: translateY(.15em); box-shadow: 0 .1em 0 #3a22b0; }
+  .btn:focus-visible, .opt:focus-visible, .ln:focus-visible { outline: .2em solid #ffcc33; outline-offset: .15em; }
+  .btn.alt { background: #e9e6ff; color: #3a22b0; box-shadow: 0 .25em 0 #b9b0f0; }
+  .btn.go { background: #26b35a; box-shadow: 0 .25em 0 #168a43; }
+  .btn:disabled { background: #ccc; color: #777; box-shadow: none; cursor: default; }
+  .keys { font-size: .88em; color: #555; }
+  kbd { display: inline-block; background: #f1f1f8; border: 1px solid #bbb; border-bottom-width: 3px; border-radius: .35em; padding: 0 .4em; font-family: inherit; font-weight: 700; font-size: .9em; }
+  .tk { display: inline-block; background: #5a3cf0; color: #fff; border-radius: .4em; padding: 0 .45em; font-weight: 800; font-size: .9em; line-height: 1.4; }
+  .muted { color: #777; font-size: .85em; }
+  .mode { font-size: .75em; color: #8a88b0; margin: .5em 0 0; }
+  .lesson { align-items: flex-start; } .lesson > div:first-child { flex: 1.1; }
+  .parts { list-style: none; padding: 0; margin: .5em 0 0; font-size: .92em; }
+  .parts li { display: flex; gap: .5em; align-items: baseline; margin: .25em 0; }
+  .parts li code { flex: none; min-width: 4.4em; text-align: center; }
+  .dots { display: flex; gap: .4em; justify-content: center; margin-top: .6em; }
+  .dots i { width: .55em; height: .55em; border-radius: 50%; background: #d6d3f5; } .dots i.on { background: #5a3cf0; }
+
+  /* code panel (door terminal) */
+  .card.term { background: #0f0c22; color: #e8e9ff; border-color: #2ee6a6; box-shadow: 0 0 1.2em rgba(46,230,166,.45), 0 .4em 0 rgba(0,0,0,.4); }
+  .card.term h2 { color: #2ee6a6; font-family: "Courier New", monospace; }
+  .card.term .goal { color: #ffd479; font-weight: 700; }
+  .card.term .muted { color: #a9a6d6; }
+  .card.term kbd { color: #1d1b3a; }
+  pre.prog { margin: .5em auto; max-width: 36em; border: 2px solid #2b2752; }
+  pre.prog .l { display: block; padding: 0 .3em; border-radius: .3em; }
+  pre.prog .l .no { display: inline-block; width: 1.6em; color: #6d6a99; }
+  pre.prog .l.bug { background: rgba(232,52,78,.22); text-decoration: underline wavy #ff4d6a; text-underline-offset: .25em; }
+  pre.prog .l.fixed { background: rgba(38,179,90,.25); }
+  .blank { display: inline-block; min-width: 2.6em; text-align: center; border-bottom: .15em dashed #ffd23f; color: #ffd23f; background: rgba(255,210,63,.12); border-radius: .2em; }
+  .opts { display: flex; flex-direction: column; gap: .5em; margin-top: .6em; }
+  .opts.grid { display: grid; grid-template-columns: repeat(2, 1fr); }
+  .opt { display: flex; align-items: stretch; gap: .6em; text-align: left; font: inherit; border: .18em solid #d6d3f5; background: #f7f6ff;
+    border-radius: .7em; padding: .4em; cursor: pointer; color: inherit; min-height: 44px; touch-action: manipulation; }
+  .term .opt { background: #1d1b3a; border-color: #3d3870; color: #e8e9ff; }
+  .opt .n { background: #5a3cf0; color: #fff; font-weight: 800; border-radius: .4em; min-width: 1.8em; display: flex; align-items: center; justify-content: center; }
+  .opt pre { flex: 1; background: transparent; padding: .2em .3em; }
+  .opt .txt { flex: 1; align-self: center; font-weight: 700; }
+  .opt.wrong { border-color: #e8344e !important; opacity: .6; } .opt.wrong .n { background: #e8344e; }
+  .opt.right { border-color: #26b35a !important; } .opt.right .n { background: #26b35a; }
+  #fb { margin-top: .5em; min-height: 1.4em; font-weight: 700; }
+  #fb.bad { color: #ff6b81; } #fb.good { color: #2ee6a6; }
+  .card:not(.term) #fb.bad { color: #c41f3a; } .card:not(.term) #fb.good { color: #168a43; }
+  .order { display: flex; gap: .8em; text-align: left; margin-top: .4em; }
+  .order > div { flex: 1; min-width: 0; }
+  .order h3 { color: #2ee6a6; font-size: .9em; margin: .2em 0; }
+  .slots, .pool { display: flex; flex-direction: column; gap: .35em; min-height: 6em; background: #17142f; border: 2px dashed #3d3870; border-radius: .6em; padding: .4em; }
+  .ln { font: inherit; font-family: "Fira Code", Consolas, "Courier New", monospace; text-align: left; white-space: pre; background: #2a2650; color: #e8e9ff;
+    border: 2px solid #4b3d8f; border-radius: .45em; padding: .35em .5em; cursor: pointer; min-height: 40px; touch-action: manipulation; font-size: .9em; overflow: hidden; text-overflow: ellipsis; }
+  .ln .n { color: #ffd23f; font-weight: 800; margin-right: .5em; font-family: inherit; }
+  .slots .ln { background: #213a33; border-color: #2ee6a6; }
+  .empty { color: #6d6a99; font-size: .85em; align-self: center; margin: auto; }
+
+  /* map */
+  .dmap { display: flex; flex-direction: column; gap: .7em; margin-top: .4em; }
+  .dgn { background: #1d1b3a; border-radius: .9em; padding: .6em .8em; color: #fff; text-align: left; }
+  .dgn.locked { opacity: .55; }
+  .dgn h3 { color: #ffd23f; margin: 0 0 .4em; }
+  .path { display: flex; align-items: center; gap: .3em; flex-wrap: wrap; }
+  .path .lnk { flex: 1; min-width: .6em; max-width: 2.5em; height: .3em; background: repeating-linear-gradient(90deg, #6d6a99 0 .4em, transparent .4em .7em); }
+  .rbtn { font: inherit; cursor: pointer; border: .18em solid #4b3d8f; border-radius: .8em; padding: .45em .5em; color: #fff; background: #2a2650; min-width: 6.4em; min-height: 44px;
+    display: flex; flex-direction: column; align-items: center; gap: .05em; box-shadow: 0 .2em 0 rgba(0,0,0,.4); touch-action: manipulation; }
+  .rbtn .re { font-size: 1.4em; line-height: 1.1; } .rbtn b { font-size: .85em; } .rbtn .rt { font-size: .72em; opacity: .85; } .rbtn .rs { font-size: .72em; color: #ffd23f; }
+  .rbtn.done { border-color: #26b35a; } .rbtn.cur { border-color: #ffd23f; box-shadow: 0 0 .7em rgba(255,210,63,.6); }
+  .rbtn.boss { background: #4a1630; }
+  .rbtn:disabled { filter: grayscale(.9) brightness(.7); cursor: not-allowed; }
+  .stats { display: flex; gap: .6em; justify-content: center; flex-wrap: wrap; margin: .5em 0; }
+  .stats span { background: #f1eeff; border-radius: .6em; padding: .3em .7em; font-weight: 700; }
+
+  /* ---------- touch controls ---------- */
+  #touch { position: fixed; inset: 0; pointer-events: none; display: none; z-index: 5; }
+  body.in-touch.st-play #touch { display: block; }
+  #joy { position: absolute; left: calc(var(--sl) + var(--tg)); bottom: calc(var(--sb) + var(--tg)); width: calc(var(--tb) * 1.9); height: calc(var(--tb) * 1.9);
+    border-radius: 50%; background: rgba(20,15,42,.35); border: 3px solid rgba(255,255,255,.55); pointer-events: auto; touch-action: none; }
+  #knob { position: absolute; left: 50%; top: 50%; width: 46%; height: 46%; margin: -23% 0 0 -23%; border-radius: 50%; background: rgba(255,255,255,.75);
+    box-shadow: 0 3px 0 rgba(0,0,0,.3); }
+  #joy.on { background: rgba(90,60,240,.45); }
+  #tZap { position: absolute; right: calc(var(--sr) + var(--tg)); bottom: calc(var(--sb) + var(--tg) * 1.4); width: calc(var(--tb) * 1.2); height: calc(var(--tb) * 1.2);
+    border-radius: 50%; pointer-events: auto; touch-action: none; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff;
+    font-weight: 900; font-size: calc(var(--tb) * .42); background: rgba(46,230,166,.45); border: 3px solid rgba(255,255,255,.75); box-shadow: 0 4px 0 rgba(0,0,0,.3); }
+  #tZap small { font-size: .32em; letter-spacing: .05em; }
+  #tZap.on { background: rgba(46,230,166,.9); transform: translateY(2px); }
+  body.dev-phone #joy { background: rgba(20,15,42,.22); }
+  #tPause { display: none; }
+  body.in-touch #tPause { display: inline-flex; }
+  body.in-touch #hint { display: none; }
+  body.dev-phone #rname, body.dev-phone #hint { display: none; }
+  body.dev-phone .card { width: 95%; max-height: 97%; padding: .7em .9em; }
+  body.dev-phone .card h1 { font-size: 2em; }
+
+  /* ---------- orientation prompts ---------- */
+  #rotate { position: fixed; inset: 0; z-index: 20; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1em;
+    background: #140f2a; color: #fff; text-align: center; padding: 2em; font-size: 20px; }
+  #rotate.show { display: flex; }
+  body.rotated #wrap, body.rotated #touch, body.rotated #overlay, body.rotated #toast, body.rotated #tip { visibility: hidden !important; }
+  .card img.logo { display: block; width: 100%; max-width: 30em; height: auto; margin: 0 auto .4em; image-rendering: pixelated; }
+  .card img.logo.small { max-width: 18em; }
+  .bossdone { width: 128px; height: 128px; margin: 0 auto; background: none 0 0 / 768px 128px; image-rendering: pixelated; animation: bossdn .8s steps(4) infinite; }
+  @keyframes bossdn { to { background-position: -512px 0; } }
+  #rotate .ph { font-size: 64px; animation: rot 2s ease-in-out infinite; }
+  @keyframes rot { 0%, 30% { transform: rotate(0deg); } 60%, 100% { transform: rotate(-90deg); } }
+  #rotate button { font: inherit; font-size: 14px; background: none; color: #aab; border: 1px solid #556; border-radius: 2em; padding: .5em 1.1em; min-height: 44px; }
+  #tip { position: fixed; left: 50%; transform: translateX(-50%); top: calc(var(--st, 0px) + 12px); z-index: 7; display: none; background: rgba(255,255,255,.14);
+    color: #dfe0ff; border-radius: 2em; padding: .4em 1.1em; font-size: 15px; pointer-events: none; white-space: nowrap; }
+  #tip.show { display: block; }
+</style>
+</head>
+<body>
+<div id="loading" style="position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:#140f2a;color:#fff;font:700 22px system-ui,sans-serif">Loading… 🐛</div>
+<div id="wrap">
+  <canvas id="c"></canvas>
+  <div id="hud">
+    <span class="pill" id="hearts"></span>
+    <span class="pill"><code id="coinvar">coins = 0</code></span>
+    <span class="grow"></span>
+    <span class="pill" id="rname"></span>
+    <span class="pill" id="hint"></span>
+    <button class="hbtn" id="tFs" aria-label="Fullscreen">⛶</button>
+    <button class="hbtn" id="tPause" aria-label="Pause">⏸</button>
+  </div>
+  <div id="toast"></div>
+  <div id="overlay"><div class="card" id="card"></div></div>
+</div>
+<div id="touch" aria-hidden="true">
+  <div id="joy"><div id="knob"></div></div>
+  <div id="tZap">⚡<small>ZAP</small></div>
+</div>
+<div id="tip">↻ Turn your tablet sideways for a bigger view</div>
+<div id="rotate"><div class="ph">📱</div><b style="font-size:1.3em">Please rotate your phone</b><div>Bug Hunters plays best in <b>landscape</b> (sideways).</div>
+  <button id="bPortrait">Play in portrait anyway</button></div>
+<div id="safe"></div>
+<script>
+"use strict";
+
+// ======================================================================
+//  BUG HUNTERS – a pixel-art dungeon where you fix buggy code (pure JS)
+// ======================================================================
+const TILE = 32;
+
+// harness code used by the automated data check to RUN every fix/quiz answer (never shown to players)
+const OUT = 'const out = []; const console = { log: (...a) => out.push(a.join(" ")) };';
+
+// ======================================================================
+//  DUNGEONS – data-driven: add another dungeon object to add 5 more rooms
+//  map legend:  # wall   . floor   D locked door (top wall)   P hero start   c coin   h heart
+//               b bug    o crate   i wall torch   t puzzle torch   T code terminal   B boss
+// ======================================================================
+const DUNGEONS = [
+  {
+    id: 'd1', name: 'The Glitch Cellar', icon: '🏚️',
+    pal: { floor: '#2b2442', floor2: '#272040', grout: '#211b36', wall: '#4b3d8f', wallTop: '#6a58b8', wallDark: '#2f2560', crate: '#a8743a', crateDark: '#7a5024', bg: '#0d0a1c' },
+    rooms: [
+      // ------------------------------------------------------------------ ROOM 1
+      {
+        id: 'typos', name: 'The Typo Tunnel', topic: 'Bugs, typos & strings', icon: '🔤', bugSpeed: 38, chase: 0,
+        lesson: [
+          { h: '🐛 What is a bug?', teaches: ['code', 'bug'],
+            body: `<p><b>Code</b> is a list of instructions for a computer. The computer does <b>exactly</b> what the code says, even when the code is wrong!</p>
+              <p>A <b>bug</b> is a mistake in code. A bug can make a program <b>break</b>, or do the <b>wrong thing</b>.</p>
+              <p>Finding and fixing bugs is called <b>debugging</b>. In this dungeon every door is locked by buggy code. You are a <b>Bug Hunter</b>: fix the code and the door opens!</p>` },
+          { h: '💬 Making the computer talk', teaches: ['console.log', 'parens', 'semicolon'],
+            body: `<p>This instruction (a <b>command</b>) shows a message:</p>`,
+            code: 'console.log("Hello!");',
+            parts: [['console.log', 'the command that shows a message'], ['( )', 'what to show goes inside the brackets'], ['"Hello!"', 'the message (text)'], [';', 'the end of the instruction, like a full stop']] },
+          { h: '🔤 Text needs quotes on BOTH sides', teaches: ['string', 'comment'],
+            body: `<p>Text in code is called a <b>string</b>. A string starts with <code>"</code> and ends with <code>"</code>.</p>
+              <p>Forget one of the quotes and the computer gets confused. That's a bug!</p>`,
+            code: 'console.log("Hi!");   // ✅ quote at the start AND the end\nconsole.log("Hi!);    // ❌ the end quote is missing\nconsole.log(Hi!");    // ❌ the start quote is missing',
+            note: 'Anything after <code>//</code> is a <b>comment</b>: a note for humans. The computer skips it.' },
+          { h: '🔍 Spelling counts!', teaches: ['spelling', 'capitals'],
+            body: `<p>Command names must be spelled <b>exactly</b> right, and small and CAPITAL letters count too.</p>
+              <p>A typo is one of the most common bugs, even for grown-up programmers!</p>`,
+            code: 'console.log("Hi!");   // ✅\nconsol.log("Hi!");    // ❌ "console" is missing its e\nConsole.log("Hi!");   // ❌ capital C is a different name' },
+        ],
+        map: [
+          '####i######DD######i######',
+          '#c......................c#',
+          '#........................#',
+          '#...oo....c....c....oo...#',
+          '#...oo..............oo...#',
+          '#.........b..............#',
+          '#..c..................c..#',
+          '#.......oooo..oooo.......#',
+          '#........................#',
+          '#....b..........c....b...#',
+          '#..c.....................#',
+          '#.........c..c..c........#',
+          '#........................#',
+          '#...........P............#',
+          '##########################',
+        ],
+        door: {
+          title: 'The Chatty Door', story: 'This door opens when it hears the right words. But its code has <b>2 bugs</b>!',
+          steps: [
+            { type: 'pick', goal: 'The door should say: Hello, door!', uses: ['console.log', 'string', 'spelling'],
+              code: ['consol.log("Hello, door!");'], bugLine: 0,
+              hint: 'Look very closely at how the command name is spelled.',
+              opts: [
+                { t: 'console.log("Hello, door!");', ok: true },
+                { t: 'Console.log("Hello, door!");', why: 'A capital C makes it a different name. Capitals count!' },
+                { t: 'console.log(Hello, door!);', why: 'Now the quotes are gone. Text needs quotes on both sides.' },
+                { t: 'consol.log("Hello, door!");', why: 'That is the same bug: "consol" is missing an e.' },
+              ],
+              check: { cases: [{ pre: OUT, expect: 'out.join("|") === "Hello, door!"' }] } },
+            { type: 'pick', goal: 'Now the door should say: Open sesame', uses: ['console.log', 'string'],
+              code: ['console.log("Hello, door!");', 'console.log("Open sesame);'], bugLine: 1,
+              hint: 'Count the quotes. A string needs one at the start AND one at the end.',
+              opts: [
+                { t: 'console.log(Open sesame");', why: 'Now the START quote is missing. Strings need both.' },
+                { t: 'console.log("Open sesame");', ok: true },
+                { t: 'console.log(Open sesame);', why: 'Without quotes the computer doesn\'t know it\'s text.' },
+              ],
+              check: { cases: [{ pre: OUT, expect: 'out.join("|") === "Hello, door!|Open sesame"' }] } },
+          ],
+        },
+        quiz: { q: 'Which line has <b>NO</b> bug?', uses: ['console.log', 'string', 'spelling'],
+          opts: [
+            { t: 'console.log("Hi!);', code: true, why: 'The end quote is missing.' },
+            { t: 'consol.log("Hi!");', code: true, why: 'consol is spelled wrong. It needs an e: console.' },
+            { t: 'console.log("Hi!");', code: true, ok: true },
+            { t: 'console.log(Hi!");', code: true, why: 'The start quote is missing.' },
+          ],
+          check: { each: true, cases: [{ pre: OUT, expect: 'out.join("|") === "Hi!"' }] } },
+      },
+      // ------------------------------------------------------------------ ROOM 2
+      {
+        id: 'vars', name: 'The Box Room', topic: 'Variables', icon: '📦', bugSpeed: 42, chase: 0,
+        lesson: [
+          { h: '📦 Variables are labelled boxes', teaches: ['let', 'variable', 'assign', 'number'],
+            body: `<p>A <b>variable</b> is a <b>labelled box</b> that remembers a value.</p>`,
+            code: 'let gems = 5;',
+            parts: [['let', 'make a new box'], ['gems', 'the label on the box (its name)'], ['=', 'put the value on the right INTO the box'], ['5', 'the value. Numbers don\'t need quotes']] },
+          { h: '👀 Looking inside a box', teaches: ['use-variable'],
+            body: `<p>Write the box's name <b>without quotes</b> to use what's inside it:</p>`,
+            code: 'let gems = 5;\nconsole.log(gems);     // shows 5\nconsole.log("gems");   // shows the word gems',
+            note: 'With quotes it\'s just the word. Without quotes it\'s the box.' },
+          { h: '➕ Changing what\'s in a box', teaches: ['plus', 'reassign'],
+            body: `<p>You can change a box later. Don't write <code>let</code> again: the box already exists.</p>
+              <p>The computer works out the right side first (<code>5 + 1</code> is 6), then puts the answer back into <code>gems</code>.</p>`,
+            code: 'let gems = 5;\ngems = gems + 1;\nconsole.log(gems);     // shows 6' },
+          { h: '⬇️ Code runs from top to bottom', teaches: ['order', 'not-defined'],
+            body: `<p>The computer runs code <b>one line at a time, from the top down</b>. So the order of the lines matters!</p>
+              <p>If you use a box <b>before</b> you make it with <code>let</code>, you get a bug: <b>"gems is not defined"</b>.</p>`,
+            code: 'console.log(gems);   // ❌ bug! there is no gems box yet\nlet gems = 5;' },
+        ],
+        map: [
+          '######i####DD####i########',
+          '#...c..........c.........#',
+          '#..oooo...........oooo...#',
+          '#..o..........b.....c....#',
+          '#..o.c..................h#',
+          '#........oooo.oooo.......#',
+          '#..b.....................#',
+          '#.....c.....c.....c...b..#',
+          '#........................#',
+          '#...oo...........oo......#',
+          '#...oo....b......oo..c...#',
+          '#..c.....................#',
+          '#.........c...c..........#',
+          '#............P...........#',
+          '##########################',
+        ],
+        door: {
+          title: 'The Jumbled Door', story: 'Somebody shuffled this door\'s code! Put the lines in the right order.',
+          steps: [
+            { type: 'order', goal: 'Make the door show 6', uses: ['let', 'reassign', 'plus', 'order', 'console.log', 'use-variable'],
+              lines: ['let gems = 5;', 'gems = gems + 1;', 'console.log(gems);'],
+              hint: 'Make the box first, then change it, then show it.',
+              check: { cases: [{ pre: OUT, expect: 'out.join("|") === "6"' }] } },
+          ],
+        },
+        quiz: { q: 'What does this code show?', code: 'let gems = 2;\ngems = gems + 1;\nconsole.log(gems);', uses: ['let', 'plus', 'reassign', 'use-variable'],
+          opts: [
+            { t: '2', why: 'Line 2 changes the box before it is shown: 2 + 1.' },
+            { t: '3', ok: true },
+            { t: 'gems', why: 'No quotes around gems, so it shows what is INSIDE the box.' },
+            { t: 'gems is not defined', why: 'The box is made with let on line 1, before it is used. No bug here!' },
+          ],
+          check: { cases: [{ pre: OUT, expect: 'out.join("|") === "3"' }] } },
+      },
+      // ------------------------------------------------------------------ ROOM 3
+      {
+        id: 'ifs', name: 'The Key Vault', topic: 'Comparisons & if', icon: '🗝️', bugSpeed: 44, chase: 0.5,
+        lesson: [
+          { h: '⚖️ Asking questions', teaches: ['===', 'boolean', '<', '>'],
+            body: `<p><code>===</code> asks <b>"are these the same?"</b> The answer is <code>true</code> (yes) or <code>false</code> (no).</p>
+              <p><code>&gt;</code> asks "is it bigger?" and <code>&lt;</code> asks "is it smaller?"</p>`,
+            code: '5 === 5            // true\n"gold" === "red"   // false\n7 > 3              // true\n2 < 1              // false' },
+          { h: '🚪 if: only do it sometimes', teaches: ['if', 'braces', 'openDoor'],
+            body: `<p><code>if</code> runs some code <b>only when</b> the answer to a question is <code>true</code>.</p>`,
+            code: 'let key = "gold";\nif (key === "gold") {\n  openDoor();\n}',
+            parts: [['if', 'only do this IF…'], ['( )', 'the question goes in here'], ['{ }', 'the code inside runs only when the answer is true'], ['openDoor()', 'a command that opens the door (a name, then brackets, just like console.log)']] },
+          { h: '⚠️ = is NOT the same as ===', teaches: ['assign-vs-compare'],
+            body: `<p>Remember: <code>=</code> <b>puts</b> a value into a box. <code>===</code> <b>checks</b> if two things are the same.</p>
+              <p>Using <code>=</code> inside an <code>if</code> is a famous bug! It doesn't check the key at all, so the door would open for <b>any</b> key, even a rusty one.</p>`,
+            code: 'if (key = "gold") {     // ❌ puts "gold" into key!\nif (key === "gold") {   // ✅ checks the key' },
+        ],
+        map: [
+          '##i########DD########i####',
+          '#c.......o....o.........c#',
+          '#........o....o..........#',
+          '#..b.....o....o.....b....#',
+          '#.....ooooo....ooooo.....#',
+          '#..c.....................#',
+          '#.........c....c.........#',
+          '#..oo.......b........oo..#',
+          '#..oo...............h.oo.#',
+          '#........................#',
+          '#....c....oooooo....c....#',
+          '#..b.....................#',
+          '#.......c..........c.....#',
+          '#...........P............#',
+          '##########################',
+        ],
+        door: {
+          title: 'The Gold Lock', story: 'This lock should ONLY open for the gold key. Right now it would open for <b>any</b> key, even a rusty one!',
+          steps: [
+            { type: 'pick', goal: 'Open ONLY when key is "gold"', uses: ['if', '===', 'assign-vs-compare', 'string', 'openDoor', 'let'],
+              code: ['let key = "gold";', 'if (key = "gold") {', '  openDoor();', '}'], bugLine: 1,
+              hint: 'One = puts a value in. Which sign CHECKS?',
+              opts: [
+                { t: 'if (key = "gold") {', why: 'That\'s the same bug: = puts "gold" into key instead of checking it.' },
+                { t: 'if (key === gold) {', why: 'gold needs quotes. Without them the computer looks for a box called gold.' },
+                { t: 'if (key === "gold") {', ok: true },
+                { t: 'if (key === "gold" {', why: 'The closing bracket ) after the question is missing.' },
+              ],
+              check: { cases: [
+                { pre: 'let opened = false; function openDoor() { opened = true; }', expect: 'opened === true' },
+                { pre: 'let opened = false; function openDoor() { opened = true; }', sub: ['let key = "gold";', 'let key = "rusty";'], expect: 'opened === false' },
+              ] } },
+          ],
+        },
+        quiz: { q: 'Which line <b>checks</b> if <code>score</code> is 5?', uses: ['if', '===', 'assign-vs-compare', 'console.log'],
+          opts: [
+            { t: 'if (score = 5) { console.log("Five!"); }', code: true, why: '= PUTS 5 into score. It doesn\'t check anything.' },
+            { t: 'if (score === 5) { console.log("Five!"); }', code: true, ok: true },
+            { t: 'if ("score" === 5) { console.log("Five!"); }', code: true, why: 'With quotes, "score" is just the word, not the box.' },
+          ],
+          check: { each: true, cases: [
+            { pre: OUT + ' let score = 5;', expect: 'out.join("|") === "Five!" && score === 5' },
+            { pre: OUT + ' let score = 3;', expect: 'out.length === 0 && score === 3' },
+          ] } },
+      },
+      // ------------------------------------------------------------------ ROOM 4
+      {
+        id: 'loops', name: 'The Torch Hall', topic: 'Loops (off-by-one)', icon: '🔥', bugSpeed: 46, chase: 0.6,
+        lesson: [
+          { h: '🔁 Repeat with for', teaches: ['for', '++'],
+            body: `<p>A <code>for</code> loop <b>repeats</b> code. This one shows <b>Hop!</b> 3 times:</p>`,
+            code: 'for (let i = 0; i < 3; i++) {\n  console.log("Hop!");\n}',
+            parts: [['let i = 0', 'a counting box called i that starts at 0'], ['i < 3', 'keep going while i is smaller than 3'], ['i++', 'add 1 to i after each go (same as i = i + 1)'], ['{ }', 'the code that gets repeated']] },
+          { h: '🔢 Programmers count from 0', teaches: ['count-from-0', 'use-i', 'lightTorch'],
+            body: `<p>In that loop, <code>i</code> is <b>0</b>, then <b>1</b>, then <b>2</b>. That's 3 goes! When <code>i</code> becomes 3, <code>3 &lt; 3</code> is false, so the loop stops.</p>
+              <p>You can use <code>i</code> inside the loop. <code>lightTorch(i)</code> is a command that lights torch number <code>i</code>:</p>`,
+            code: 'for (let i = 0; i < 2; i++) {\n  lightTorch(i);   // lights torch 0, then torch 1\n}' },
+          { h: '🐛 The off-by-one bug', teaches: ['<=', 'off-by-one'],
+            body: `<p><code>&lt;=</code> means "smaller than <b>or the same</b>". So <code>i &lt;= 3</code> lets <code>i</code> be 0, 1, 2 <b>and 3</b>. That's 4 goes, not 3!</p>
+              <p>Going round one time too many (or too few) is so common it has a name: the <b>off-by-one bug</b>.</p>`,
+            code: 'for (let i = 0; i <= 3; i++) {   // ❌ 4 goes: 0, 1, 2, 3\nfor (let i = 0; i < 3; i++) {    // ✅ 3 goes: 0, 1, 2' },
+        ],
+        map: [
+          '#######t#t#DD#t#t#########',
+          '#c......................c#',
+          '#........................#',
+          '#..b......c..c..c.....b..#',
+          '#...ooo...........ooo....#',
+          '#...o..c.........c..o....#',
+          '#...o....b..........o....#',
+          '#........................#',
+          '#..c....oo......oo....c..#',
+          '#.......oo..b...oo.......#',
+          '#..h.....................#',
+          '#....b....c..c.......b...#',
+          '#........................#',
+          '#...........P............#',
+          '##########################',
+        ],
+        door: {
+          title: 'The Torch Door', story: 'The door opens when all <b>4 torches</b> are lit: torches 0, 1, 2 and 3. There is no torch 4!',
+          steps: [
+            { type: 'blank', goal: 'Light torches 0, 1, 2 and 3', uses: ['for', '<', '<=', 'off-by-one', 'lightTorch', 'use-i'],
+              code: ['for (let i = 0; i ___ 4; i++) {', '  lightTorch(i);', '}'], blankLine: 0, was: '<=',
+              hint: 'i starts at 0. Which sign stops the loop BEFORE i reaches 4?',
+              opts: [
+                { t: '<=', why: 'That\'s the bug! <= lets i reach 4, and there is no torch 4.' },
+                { t: '<', ok: true },
+                { t: '===', why: 'i starts at 0, and 0 === 4 is false, so the loop never runs.' },
+                { t: '>', why: '0 > 4 is false, so the loop never runs at all.' },
+              ],
+              check: { cases: [{ pre: 'const lit = []; function lightTorch(n) { if (n < 0 || n > 3) throw new Error("no torch " + n); lit.push(n); }', expect: 'lit.join() === "0,1,2,3"' }] } },
+          ],
+        },
+        quiz: { q: 'How many times does this show <b>Hi</b>?', code: 'for (let i = 0; i < 5; i++) {\n  console.log("Hi");\n}', uses: ['for', '<', 'count-from-0'],
+          opts: [
+            { t: '4 times', why: 'i is 0, 1, 2, 3, 4. Count them: that\'s 5.' },
+            { t: '5 times', ok: true },
+            { t: '6 times', why: 'i < 5 stops BEFORE i gets to 5. It would be 6 with i <= 5.' },
+            { t: 'It never runs', why: '0 < 5 is true, so it does run.' },
+          ],
+          check: { cases: [{ pre: OUT, expect: 'out.length === 5' }] } },
+      },
+      // ------------------------------------------------------------------ ROOM 5 (BOSS)
+      {
+        id: 'boss', name: 'Lair of the Big Bug', topic: 'Boss: everything together', icon: '👾', bugSpeed: 48, chase: 0.6, boss: { name: 'The Big Bug', hp: 9 },
+        lesson: [
+          { h: '👾 The Big Bug!', teaches: ['boss'],
+            body: `<p>The <b>Big Bug</b> is covered in armour made of buggy code. Zaps just bounce off it!</p>
+              <p>There are <b>3 code terminals</b> in its lair. Fix the code on a terminal and the Big Bug's armour cracks to show a glowing <b>weak point</b>. The Big Bug gets dizzy and stands still. Zap it <b>3 times</b>!</p>
+              <p>Fix all 3 terminals and zap the weak point each time to win.</p>
+              <p>⚠️ When it flashes <b>!</b> it is about to spit slow goo balls or call a little bug. Step aside, or zap them!</p>` },
+          { h: '🧰 Your bug-hunting toolkit', teaches: [],
+            body: `<p>You'll need <b>everything</b> you learned:</p>
+              <ul style="text-align:left;margin:.3em 0;padding-left:1.3em">
+                <li>Strings need quotes on <b>both</b> sides: <code>"eye"</code></li>
+                <li><code>let</code> makes a box, <code>=</code> puts a value in, <code>===</code> checks</li>
+                <li><code>if</code> only runs its <code>{ }</code> when the question is true</li>
+                <li><code>for</code> repeats. Watch out for <code>&lt;=</code> and off-by-one!</li>
+              </ul>` },
+          { h: '⚡ Two new commands', teaches: ['showWeakPoint', 'zap'],
+            body: `<p>The terminals use two commands. They work just like <code>console.log</code>: a name, then brackets with what goes inside.</p>`,
+            code: 'showWeakPoint("eye");   // makes the eye glow\nzap("Big Bug");         // zaps the Big Bug once',
+            note: 'Watch out: the Big Bug keeps sending little bugs at you!' },
+        ],
+        map: [
+          '###i#######DD#######i#####',
+          '#c......................c#',
+          '#........................#',
+          '#.T....................T.#',
+          '#........................#',
+          '#...........B............#',
+          '#........................#',
+          '#.c....................c.#',
+          '#........................#',
+          '#........................#',
+          '#.....c............c.....#',
+          '#..h........T..........h.#',
+          '#........................#',
+          '#.........c.P.c..........#',
+          '##########################',
+        ],
+        door: { lock: 'boss', title: 'The Boss Door', story: 'Beat the Big Bug to open this door!' },
+        // terminals are matched to T tiles in map order (top-left, top-right, bottom)
+        terminals: [
+          { type: 'blank', label: 'Eye terminal', goal: 'Show the weak point ONLY when shield is "down"', uses: ['let', 'if', '===', 'string', 'showWeakPoint'],
+            code: ['let shield = "down";', 'if (shield === ___) {', '  showWeakPoint("eye");', '}'], blankLine: 1, was: 'down',
+            hint: 'Compare with the word down. Words in code need quotes.',
+            opts: [
+              { t: 'down', why: 'Without quotes, down is the name of a box, and there is no box called down.' },
+              { t: '"down"', ok: true },
+              { t: '"up"', why: 'shield holds "down", not "up". The weak point would never show.' },
+              { t: 'shield', why: 'shield === shield is always true, so it would show even when the shield is up!' },
+            ],
+            check: { cases: [
+              { pre: 'const shown = []; function showWeakPoint(s) { shown.push(s); }', expect: 'shown.join() === "eye"' },
+              { pre: 'const shown = []; function showWeakPoint(s) { shown.push(s); }', sub: ['let shield = "down";', 'let shield = "up";'], expect: 'shown.length === 0' },
+            ] } },
+          { type: 'order', label: 'Spot counter', goal: 'Count the 3 weak spots, then show 3 once', uses: ['let', 'for', 'reassign', 'plus', 'console.log', 'order'],
+            lines: ['let spots = 0;', 'for (let i = 0; i < 3; i++) {', '  spots = spots + 1;', '}', 'console.log(spots);'],
+            hint: 'Make the box, loop to add 1 three times, close the loop with }, then show it.',
+            check: { cases: [{ pre: OUT, expect: 'out.join("|") === "3"' }] } },
+          { type: 'pick', label: 'Zapper', goal: 'Zap the Big Bug exactly 3 times', uses: ['for', '<', '<=', 'off-by-one', 'zap', 'string'],
+            code: ['for (let i = 0; i <= 3; i++) {', '  zap("Big Bug");', '}'], bugLine: 0,
+            hint: 'Count the goes: i = 0, 1, 2, 3… is that 3?',
+            opts: [
+              { t: 'for (let i = 0; i <= 3; i++) {', why: 'Same bug: 0, 1, 2, 3 is 4 zaps. Off by one!' },
+              { t: 'for (let i = 1; i < 3; i++) {', why: 'Starting at 1 gives i = 1, 2. That\'s only 2 zaps.' },
+              { t: 'for (let i = 0; i < 3; i++ {', why: 'The ) after i++ is missing.' },
+              { t: 'for (let i = 0; i < 3; i++) {', ok: true },
+            ],
+            check: { cases: [{ pre: 'let zaps = 0; function zap(t) { if (t !== "Big Bug") throw new Error("who?"); zaps++; }', expect: 'zaps === 3' }] } },
+        ],
+        quiz: { q: 'Which code lights <b>exactly 2</b> torches: torch 0 and torch 1?', uses: ['for', '<', '<=', 'assign-vs-compare', 'lightTorch', 'count-from-0'],
+          opts: [
+            { t: 'for (let i = 0; i <= 2; i++) {\n  lightTorch(i);\n}', code: true, why: '<= lets i reach 2, so it tries 3 torches: 0, 1, 2.' },
+            { t: 'for (let i = 1; i < 2; i++) {\n  lightTorch(i);\n}', code: true, why: 'Starting at 1 only lights torch 1.' },
+            { t: 'for (let i = 0; i < 2; i++) {\n  lightTorch(i);\n}', code: true, ok: true },
+            { t: 'for (let i = 0; i = 2; i++) {\n  lightTorch(i);\n}', code: true, why: '= puts 2 into i instead of checking. It never stops properly!' },
+          ],
+          check: { each: true, cases: [{ pre: 'const lit = []; function lightTorch(n) { if (n < 0 || n > 1) throw new Error("no torch " + n); lit.push(n); }', expect: 'lit.join() === "0,1"' }] } },
+      },
+    ],
+  },
+];
+// flat list of every room: ROOMS[k] = { ...room, di, ri, label, dungeon }
+const ROOMS = [];
+DUNGEONS.forEach((D, di) => D.rooms.forEach((R, ri) => ROOMS.push(Object.assign(R, { di, ri, label: `Dungeon ${di + 1} · Room ${ri + 1}`, dungeon: D }))));
+
+
+// ======================================================================
+//  CONTROL WORDING (swapped live between keyboard and touch)
+// ======================================================================
+const CTRL_SETS = {
+  keys: {
+    move: '<kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd> or <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>',
+    zap: '<kbd>Space</kbd> (or <kbd>J</kbd>)',
+    pause: '<kbd>P</kbd> or <kbd>Esc</kbd>',
+    mute: '<kbd>M</kbd>',
+    fs: '<kbd>F</kbd> or the ⛶ button',
+    interact: 'walk into it, or press <kbd>Space</kbd> next to it',
+    pick: 'the number keys (<kbd>1</kbd>, <kbd>2</kbd>, <kbd>3</kbd>…) or a click',
+    orderHow: 'Press a number key (or click) to add that line to your program. <kbd>Backspace</kbd> takes the last one back. <kbd>Enter</kbd> runs it.',
+    nextHint: 'Press <kbd>Enter</kbd> for the next page',
+    startHint: 'Press <kbd>Enter</kbd> or click Start',
+    hud: 'Space = zap · P = pause · M = mute',
+  },
+  touch: {
+    move: 'the joystick (bottom-left)',
+    zap: 'the <span class="tk">⚡</span> button (bottom-right)',
+    pause: 'tap <span class="tk">⏸</span> (top-right)',
+    mute: 'in the pause menu',
+    fs: 'tap ⛶ (top-right)',
+    interact: 'walk into it, or tap <span class="tk">⚡</span> next to it',
+    pick: 'a tap',
+    orderHow: 'Tap a jumbled line to add it to your program. Tap a line in your program to take it back. Then tap <b>Run</b>.',
+    nextHint: 'Tap <b>Next</b> to keep reading',
+    startHint: 'Tap <b>Start room</b> when you\'re ready',
+    hud: '',
+  },
+};
+const CTRL = { ...CTRL_SETS.keys };
+const subCtl = s => s.replace(/\{(\w+)\}/g, (m, k) => (k in CTRL) ? CTRL[k] : m);
+const ctl = s => `<span class="ctl" data-t="${encodeURIComponent(s)}">${subCtl(s)}</span>`;
+function refreshCtl() {
+  document.querySelectorAll('.ctl').forEach(el => { el.innerHTML = subCtl(decodeURIComponent(el.dataset.t)); });
+  const h = document.getElementById('hint'); if (h) { h.textContent = CTRL.hud; h.style.display = CTRL.hud ? '' : 'none'; }
+}
+
+// ---------- tiny syntax highlighter ----------
+function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function hl(src) {
+  return esc(src).replace(/("[^"\n]*"?)|(\/\/.*$)|\b(let|const|if|else|for|while|return|true|false)\b|\b(\d+)\b|\b([a-zA-Z_][\w.]*)(?=\()/gm,
+    (m, s, c, k, n, f) => s ? `<span class="str">${s}</span>` : c ? `<span class="cm">${c}</span>` : k ? `<span class="kw">${k}</span>` : n ? `<span class="num">${n}</span>` : `<span class="fn">${f}</span>`);
+}
+
+// ======================================================================
+//  SPRITES – every draw goes through Sprites.draw(), so the artist's PNG
+//  sprite sheets (32x32 px per frame) can be dropped in later: set `src`
+//  below (a file path or data: URL). Until a sheet loads, the procedural
+//  placeholder pixel art in PROC is used instead.
+// ======================================================================
+// The build (build.sh) replaces each %%ART_<name>%% with a data: URI of /workspace/bug-hunters-art/name.png.
+// anims: { anim: [row, frameCount, firstCol] }. If a sheet is missing or fails to load, the code-drawn art in PROC is used.
+const SPRITE_SHEETS = {
+  hero:     { src: 'data:image/png;base64,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', fw: 32, fh: 32, anims: { down: [0, 4], left: [1, 4], right: [2, 4], up: [3, 4] } },
+  heroIdle: { src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAEz0lEQVR42u2aQWgbRxSGf4klB7VkczA0MsbqKU5NECZgYyr3UhIXXwIBk0uhNKHuQeTgg9VcfW3kgw9FhzSkIcSXYFrooUoIhELsYhIIiQiL00OxQprE0EMsjChGoB6UN54dz+7O7s6sZVcPBNLs7P5vvvdmZt/YKUSw9k6tLWtPHcmnkID19PXpW1GEcx/P+V43BaKnr1/fCiNOwhPZl9I+dL29U2vrhtDTN6NvhREn4UqhKe1XXH3JHNEJQdQ/nTvKrn0z8BbF1YwLjGl9skqhieuvjnMtyejr5G+FESdhftBP6g0XEHJEFwQZ/Cf1hisJRJvImtWXGc/BlL4J/lYYcRLmRd0ZmGGO6EgCP/jMhwFzSaASfC8WuvVN8VfaAjoPzABoKDleXM2gUmgiv2x+5nWz6VoJTPJPBwWgNr0eGUBtep0BMAnaa088yJpJ8U8HidsTGdhzp1zXl27O77lHbLPnTsGeyMROgqWb8+zZokal0GQ6SSZBpdBkXERd3lcZp7DBl/FXMVX+VthgqCTBl1/Pa4e+8mZwj+7Wj991xVIvsiBfD4Klowwy98WNvTUo1xY188UZUL93Kbjz2l/7R09Bu37vktZt0K/68bsWLwGiQI4RmNSRfKq+sbCbVPdfS5PBnrmKrZUmtlaa7A2Yn4X1jYVYp3Lkhziji6sZpmvPXJUGHfdfs4kR1w+epVcJfDp31F0dKPK3vAbO9iF0XkLsTzqBwNl+aTBY2/s+WyudvTG/fDI+gLP9eHjlFj77/itpEgDA0szu1qMj+DIWVJEErXBevkbRJP5Axrf0FNtU+adUjx9lQX945RYASAdLszdOIEJtBQA2aw7GSmuxdf04PCqP46P8sNJ9cWe/yvFv0DtTkH5KxQk6XnxUHgcATwCbNQcAMFZaQ31jgWWzafi8bqs01VnaylUtSUD6/HP9OOhOQp6/ahLQCqjCX6kKoADQwIA1pXvICR1L8K4f3tqt0hSscpUFS7fRs8dKVV8OupJf5B+mulDlb6lmf9/oEN5dWMSxO7MAgD9GPsenTx/s+U59/nn8Qtt5OJ8El51rKFrHMXziHPOF10zCjt2ZdbF4d2ERzp+/otJ6ix+Gv9UWfBl/Su6+0SFXXxq7Va6G4p+O6hwFXPyehCWtd1B9ilwF9Kz7Tddqlz6McHS9APJnAVa52hVjE5d+1WuxVoC/z2QBNJALyD5y4JndAM5kkSvrB7D40y+BjussAcW63G9GLj5+YWRJFfkHBToMf+UVgEotPtj8J6i/Lpu9eN6VaM/sxr7NRl6/b3QIsxfPG9MKy1O1vxUm8y8713D7uSMNOLW1SlNaDoG87PZzB91qun0T+VPV4Wdh+VthnKDlV8VMBN+1/XADbZWmEisBmQ8e+rq3AJ5/mDGq8lcOUNAemETwVXwwpb3f+qb4h07YgZHpzuHHpoPtN45nm0kjPbJXT5fxYXY4EW0ATEvmR1Jj18X/UJaBPfsfJQDNfpqZpv4HkZZgXiuJGd9LgJ51h7V3au3B/sn29va/7DPYPyltMzUDRS3Su/v7OvuY1he1ZP4kNX4d/EO/BH7w2wj3a9CzzZS5tTp64z9Pcr9PGtUXtWT+JDf++PxTYbOQL0Xo781i22Esw7pRXwf//wBeFog+P2VGZwAAAABJRU5ErkJggg==', fw: 32, fh: 32, anims: { down: [0, 1, 0], left: [0, 1, 1], right: [0, 1, 2], up: [0, 1, 3] }, fb: 'hero' },
+  bug:      { src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAElklEQVR42uVbMWvbQBR+Eh46eDTE2GC7u8dgQkJIBuNAt3TpUOiSxX8goZMHj01/QJYshQyl0DE0xkNKSAkhU/HoQTbEOOAxQyjB6qCeez690z1Jd5LtHBgS3UXffd/7dO/dKQYgtlKh4ZYKDVfXuGVqYTmtnAalQsN1//x23eGbQGLUcSaDoFv8sJxMaWCKv02ewfij3nEhyQ+czzC4yYDKgJRxoVtYTpo1MMnfXpplKEUDrjL/DGXQcNSxyhueo4ajjhV33DK1sJyWTQPSBEuFhju48bxS3niWEqOOi7oMUkSljgu1/IbgZEoDU/yXIgUwUUk5kDBuGYtwU/wjpwARYDjqWC8pBWD8VzYFYKRblfpcX9vp+sTQ/RSoDKgrBew4rgsA8LNiWavO3wob+C+7zdn1vtP3jWVCYBOQCbvoBtTFX+c8dPG3KKA86Q+XJ4ETYNfbTld7AZRGAFadP6kGYEAH14cwgH0oF/fQcYP7CwAAON06hlalDm0AN64IkQOgAfsl8PftAs7dTffc3XQZuAgkI4/1tSp1LdV43+lD3+nDztn+TGRZAA6uD7VhvwT+tki4WcxCs5hdiG2UzgDwxk6LC/9ZFANmeLDqdL6zJ6wPp1vHMLi/gNOtY9+NWpU6HFwfon3U6tSk6ZrFbOx5ROWPaQuFhm+JNslftmuwVAYQHRi2sdzE7s1MhZGn4AeZDOsT8fl7ywLAz1UHf1/wEfy0+Nu8I3q219GzaUFVXWONB69OvU9Ut8vIB/VhAZA9pZSxYfnzorNP1OJQN/+M7DChZwPc5nNQc7o+F7YqdR9h7ElpO134lHkFR89PSmGHo44FRFO0kTlh13jhq9N5Y6sCYIq/DHc46lgn/2oUlq6S4C99qXObz81+r40n6M2DliNGnrWj5yfAzKbCl2GHCQDDp75IAfCCr5v/cNSxKIdhSfK3ZCK8/uVtN76+fR84ERl5XkAAgMvJo88IQUWQjgDc5nMobhA2e1LE+UflT+GdJn+0EOvZfgOwiVCOIkXxeBPwyyGfC/kiSGcAMNwgbBn+2vY6lL/9iMQ/iDdWBCbJ38KCLwvg2vb6/z0nJ0ZQ0MWnAJuEinxcA+rC18k/jPlN8pc+AXz+2s1lZ+C3+dxMiIerO7icPMJuLqt0JT95rOgUt4kq/DABEPFlQeDHm+JPMWCS/DNYxahqD1d3kfbEQRUwcAc0qi3iw9XdXI6lBGAOHzkMYrio8OOnOYH5wKuw330/837Y3JvxFHdEafK3sJM6UQgmhmx54/t4p4o5iLr3NYVP2f4xHUziq04jk+Q/dxDEL0di1RinsXtR/6/dBD71AIoJZBKfab0I/AOPY7FaQHSZagmqjSfS6lt1Zm4CP8wcksZPg78dBM7cw9zIqklKq40naOFHPQbWiU853sY0YE+ibnyKBknxz8jARYcesdw48Vwpcx0Dnft74SULRXzxHrHwhfRTnQL6Ng4LwCwlxMRnOsg0SIs/OijOK9swy7vsbZhqiY6Cr8JQzU8HfpDGafFP9N+WVSR1f6nDRABM65MW/0RJLuqXNlbxq+2q9hfBWA1q0B2cEgAAAABJRU5ErkJggg==', fw: 32, fh: 32, anims: { walk: [0, 4] } },
+  squash:   { src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAAAgCAYAAADtwH1UAAADyElEQVR42u1ZPWsbQRCdE1cYIkijQpzgbLcqUxhxKeLCnCCodSPcpfEfiEoVroLzB9ykM27cppFQ4SZCqAqBqI0kkDDYRQIKhGDYFM5cVqv9vj2dRDxgzN1+aO/NzJu3uwBP9mRpLAxiEgYx2db1F7Yd/MnAh8nAh211QsEFCJsc2ZueIZ6LCNytPcB03vVcgn8xWwAAwGmlKJ0bweX1CYOYDMslAAA4uL13usbcMwDBh/K7XClgOu96eQGbaXbpTBwGMSHT15ksYtMpCL/d9Pu1+poA66rPNgoAUweEQUxuXzSX+hfSUosq/XG+bXBC1muczrueVi1yRS1JlPz+khlVuQT/1ZgYRbMNBWmroDCIiYvilqVSsslGWT+Tb06YAsD5t+WW2roFMwxisvhOVv5kYzHCTaJ8HQV+LTthnehAzT4sl0AF5GjU4baNRp211RpXu3DfJlVtMyDtfCz4z54D/Pyx6oRqtb5CJdN514Oo7vS7MtkJs9yWZsEIvC5XihxFRxg6gAc+WrVaN8q+PAPLcwGcTpGyWSiuA0FHYEUUxOuDz5taJH0RZ7vmUhvwWaBpUHlO4L2nxpBNdIKxbDPZmNmmKA2+iGqq1TpcX10mz8fNE9AZs2lO8HXApEFv7x1JJzwDIK74V8bzLsfkaQWdaGzvHUF77wgms8cIe/Pp7Uo/fDeZdQD7p9X/NkDqjFHp93Xu2D0d8FmgP7x8z+3Pazsb95TKZ7//6NhvUT2pP6JCizxPKx1GgoJsLACA7I4A9yOu7w9Eu2zfJAIQYB7QsjabWvD1893S83HzZAlkXr1hnUPXCKMDM4iJa/D3+x2AaFUIKG+RVJyvsrNxD879HQAAaD38Et5cqdSXSPXIMoaXJWmUWRYZ4InAR0vjBBp8NJETRNKTphRegTVpd6GGaCB5oJoeYvoy8JEvD8Y90FZBVF96vpv7xzvec38HWoKFy4BUqRtZO9smOq7QkeSD/keoRQ3CfguvXWd+X+fHaSBpZ6j60nZYKiZO0JWRdPSKdL2sHcHerdSlu2cT8On/taiRUCC+Y9qVTvbZ4kNTxmGpuERFPIBv7hdL/WR2WCoq1QUnUkF2+ilrl+2aTe1itoBapQE00CKrRXr9VjJgOu96reCfE0zA1TEV+KzyUb131a5jp5WiNvjDcgkOokb6wzjkOZkTWCexmYLPOpwYBjHhScfj5gmI3iMF2IyzpaHaX3B5xy6idquNmGhPIOJ5Guw0h3Cyw8Hrq8tkT8ADgG23ubq0kZO2KijVOX8euto1AE/2n9sfQ+JlRrsze/gAAAAASUVORK5CYII=', fw: 32, fh: 32, anims: { squash: [0, 3] } },
+  fly:      { src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAADjklEQVR42u1aP2sbMRR/MjeU9htcwCZJwf0GMaY1ne5G47WYbOnaL+B6SP0FujabCZ0KJqM9OhAcOgQ61dA4tQdD5hCTwaAOrlxZJ+kk3d/a+kGI78R7T0+/33vSnQ1gYRGGouvhNO0sckR80fXwzQPG5HOSdhY5I//mAQf+wsg0tYsiUMuWOQqihb0Y97kGF+P+urWzBKjaxUX+dOTAdORkttVsgwAL/zMBWXfIbRDgWgAY49SSSDOWFaAcDvlwdrtYO24Ne/D9fiE0ag170Kk1AhNStMMkVhTM5gNUqqwSn80HyErCDEj3DAAAUC/7MJsPEFEeIUDVzvSxkbYlFQAAUKosA351fEV9PM5CgGH5a3cAFrJKDk7Aw2QCYXYyfzLx/BXQBqmlylJIuIqvKMSJ8k8LcXVAYQdoDXuB+2zbl0Fkz5usIvkwPXz1j/zbn3B8cAoAAOP7H3D9+C0wruJTZ/F09loTUrLogNJ2TJPYqTW0CWDtRYuCMZaeC9jY7By6k7ZwnCdEAICTw+dQ2lMXQNH1sG7+uuJSEawqVMWPVBVpSoBKRXz59YiVyB9+Xv2vfdiIETYuEoFMlDLydfJX9Z9VB9RL3pAA1UUQbRu8xeXGF4zrbEdZ5J9lBzRWvw4BOm2Wd//ceSa0aS6fQsdN9uiw7qeTf1jMLDugo0LM5fR3pPGoB6em62Eeyc3lExwfnEJz0gbRuOlhjLTPetmPnD/li/u08P7lCyTqgBugiDUa53RA5cqUEdCNmQBRNdIxSGwCdg6k8nXj8/bjetkH0/x5vkRzyqIDOqoLwwaiCeBVoSiwKfav+tCsbp6Cu5O2cHz/qg93VT+2+Gnkn0UHVO4AYQvKjpPruF6QFF0P0xVP49PlEXx8cx0Qh0n1iw6MpvlHOYCm0QFRnghQFWIYoghP9EhWL/ugm7/Ij4kwkypAlDcCoggxqvAwxri050tPzar5yx6/EEIoLx3Q0ZnEbD5AUPUTI0AV9N5PDmFx4Ox2AbP5AHVqDeGJ/K4q7gTs3HgCgrCTvmTtuwDcAnw7BYDzI6MCjPy+mkdA0gIouqsvX+i5kOs4zxwAm199szFl+Yvs89wBtReH/CKFvoaUkXRMnn+d/OOeHx2z6Hq49XqE2XtbRUDekaXo81CAFjsoQAsLCwuLrYDui6B3is+sXxPa73Y2vmps3TkU4naa1OLvenwdv0mugcWW4Q9M+eu22c7AugAAAABJRU5ErkJggg==', fw: 32, fh: 32, anims: { fly: [0, 4] }, fb: 'bug' },
+  boss:     { src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYAAAABACAYAAAATWKC/AAATwklEQVR42u1db2wUxxV/Z10aKVUIIpJjLsotdVGJIgRyPyArwWo+oHPhQxXUkJJaTRpZKRglYJQASZQgBGn+AcKQKEAiRP/INQ2pHLWqLU4oSoWDLqiKFcsluKLUezSOsRQUiIpEg7h+2Jv17OzM7uzszP65nSch7nZvZ9+bN/P7vfdmdg2gRYsWLVq0aNGiRYsWLVq0aNGipcElJ3phsVCqoc/VqXIuDuWToIMWLVq0ZIoAioVSzZzcAzD9HAAAGO03IgfguHXQBJhdSVK/R62LHveN1R95PZ1lkE+pFj8BRqdD1gEwbt/HpUuxUKqZFwcArp2x7rcI4hn3Mevg0MU8CHD5HUuXtpj6I4QO+TgnJzrvdU5Ht5r80qCLFi1plLzSyVmpN1+5AEavc3Lik5ecuMVCqWb2VQHaW1M9sbNOgNr+bNqvA7/09EdTNOBftJXHDUKRG60jjN4iQOUCAACYlbzzurREypU8mJU8mH1Vl/6IAGm2IQJE16fNdm1/du0vFko1c2IzmBObwTzVTbft4gCYE5vp5051A7o+jX6n9sdoG5ijbWD2t9BtNg+COdpGP9ffAuh6Ff0hTgAEeAdJ2WmGeJ2TqUOUkz+rBKjtz6b9CPwBAGDmKhgdR+h21+v3VLs7jgDMXLXsTjkJIPAHAICzX4LRNU3vj3r9ntofXdMAZ7+0+kMBCQgRQHWqnDPabwD6Fyg1qQ96s5IH6FoI0LUQ7MkSANBD6SBDNAHGb39cItjvSuyPegwQ4M1t98UBtt2MczJ1UCYEeHP3h3mQ3R+MczJ1QJJXMskp0Q9+3OyrAkDr7EWVC2BWWu1zaL3A6C3VzL4LAO2tYFbyiVkLsMhHsDZHEiAAmJXzYLTfECDAmOqlYUBHkv1xAWDofpdof9RjoDpVzhmLQOx+ddA2JzYDfDjH/mws2hcI0EPpICC16qparjiUY+rSJqhLHbTN0TaAX99d/wxgtI0GAvRQOohmAI76Jis9JVJfh9QXd+HpsvWvvZVtHJYKB9YhQem/mwCBIMDZc8UCIsDklQH8Mq8o7Y89C8yg/4OWf/Dj5qlu50UzVwE/Z9udkDJQrbqqBi2vWf9LKv/gx83+FudFZ78E/JzdHwrLQOq2gba3gtln7f6xIx4WEXhdh+0GStRgx+yhZia8BMjqB5sAZ7OgwDrEKYrtT7TvI7I/6jHgAHlg7MEnav8OabYif1j8H+d3mt0dUDNPdbt+w6VDgCjeS3LFoVytCsxrHSAPjD34RO3fIffNt/5f/Xfnd1p/dJVqZr/7N1w6REkAKC01K3kMzIv2pHhw2ecwWfkEJpt+OTuoyeN1cW4FvZGubWENSoDcoBOB/YkmwQYOgDyleQ6Yp7rB6LDKEjhYu4jA6zoK+IeL4kGYBEIpcN98MPsBjK66PzGwdhGB13X9LUyCCCORLwJPVj4JdFyFDlGUSGYnc9URFT5486+w4PR2Z1mLcTyNBKjtz6b9Vm1+nwPM8azgL/Bj+MOlH9qlHa/jOPgbi/aFsjtXHMrB9HPhgVykP9pGMTBvcWQFvbXXYO0/HrdLO17HcfA32kaljoN8GANFoqJJ2Fn/0ko/XlGsg8QsR0QPuQSYvodmZNkfL8CL97tM+9O0CPzNpZlAx2XqoAr8wyzATp/9PNBxFTpILwHhixNG+w0wK3m4MnINxh4+B1f2BGtr7OFzcGUE4I52qy3UfpIi/SwSYCjQUWB/HCQofB/J9scxBoTu1zwHfg6f1r/MoR+fSfa4l6rLffPhGPy2/mU+/fjZaPpDWkcWC6Xa7x5cD499dCi5E1CxkKvzZiUPV/aMh2rzjmcX2wSYpkgf1edl2Z8Gu7Pqf5fdE5vhf2OXQ7X5nSXzwC4pQbpeC+Hqj9E2+O8f/x2qze/+7Htgl5Qk9od0AkCCE8H2BSuE2tw5eZLaxs7Jk4kbEJoAnQNfZl9sX7DCHgtJtr1R/B9k10yxUKpVfn/Ymej8Yp0UPU68/Yb9uXPD1tQEAX/uedFx7CcHX5bS9sHVT9ifewaPSukPqSWg85PnXYC9c/Ik7Jw8GZgE0ISnXbd9wQrYCZDIF8QhElRKgAm0nQTAxz46JGy3Vz8kqQzYiP4Ps2sGAT8O3GGkc8NWu70Tb78BnRsgVS+FRMCPA3cY6Rk8ard3cPUT0DMYvj9ysiY/PkC7P97iOG/c3RloIqCBb35xwnH8yAO7Xb9LyoAg+4CHyEQJMIlZkM4AG8f/QTMAEvBx4A4L/LRzSSaBYqFUIwEfB+6wwE87F/sagB8BIBIIQgAk+CeZADQBZpsAs+p/GviHIQLe3yeVBGjgH4YIeH8fhgTyqiY+OfjNL064BjBLzC9OOK5jSZJLQSx7glyTFvECwG7YAsbdnYHKgDwAmBbfZ8H/LEFA7gfsYTOGtAgCcj9gD5sxBMnq9J+E1ASoAVD7X3r0HwTYeYkC/33S1gP8ov8gwM5LFPjvvdYDvNZ1NAFo0QCoRaqIRvRBiSAtIhrRByUClni900gJARx5YLddBkATmHfyo9/61T+1aNHSGMDfqEQgq5QjgwhYi/qhCIAV/XU/vARgXx343x8TJhG7rfr/tLaSGAVqAsy2ZNX/soFapD3RN3+qEJk1fBXtAUjYBVQslGpr5yx0Hf/BvAWO7/iWPh4JsmAYF/h7EiCauIIEGKStRPYBsRMmKIDxXq/9H30fsOr/97beaX8+d+GrUPfgaYvcDYRq3VG//I1V/1/1o+/bn4f+9q9Q9+BpS2Q3UCQEsHPyJDz0rfWyj/0z1uPMm5qdr0Ulj39wSzMXCSRhK5wmwGwTYBb9XyyUau/te8l1/I5bb4+s3ESzO64MoFgo1V5YsdJ1/J7bWyIrN4mMg0gWgdGj/A99O+MA/v1PbrBA/923Hcd5wT8tIkKAIk9PRy3VqXJuJ4ALALe9MykNAP0IJIkPhWXF/0HAOqoSUlLKP35gHVfJJxYCwEkAlw9+87714ZZmoegnLaIJMNsAmGX/d27YCgOv/goAAO5/7KcAAHD6d3+ifu/csLXhnwXoGTwKzy6z/kDW04PvAgDAm6ufpH7vGTyqnAS42RK96AtFW+Qb78gokIwAVQELGZHSdFWZ9tFsZ9nPGwUHmfxxlz947cdJgAaAjsAgAACmxf5G8j+ym7cEpCIDSNLTwKg/eEtAKjIA0RIQ9/s+ys3WIC/NWC98I7/zTgIVBOClm6pBQvZJXAS4I38b7LhxLRYQKDcvpNoeNQBGQfZZ9T8r8PvswEuwdOMuFwlEsQbQuWErlHc/A6UteyMP/Fj9MbJqJSwfGnaRQBRrAD2DR+HQ8mWwfuRM4P7I8w70RQeeqof6vY7zCASOXaUDQRTg76mbpC2ieGeiz6WZ8zbZkPLPy5ORgACun8qJ4GU/iwTCAHtQAIzT/kb1f7FQqn12wAL4pRvBBn7r+y7qNVeufxMJCZS27AW2bmq2hRcLpdrIKgvglw+BDfzW92HqNRe/mY6EBNaPnAG2buz+yPNGORMb32L+jkUCqiYBGfn76haSBBzRHlidi0d/5pq1YBw/FjkBIvBj6iaR/LzsjxMAk2B/I/ofgf/cBxZTz6MM4JHNu6ilIJXRP7q/t25ySQCB/z1Pr7YOEICPMoBXTg5TS0Eqo390f2/d6P3RJFMZc81aOHb1vAsIVAz8qFP9RQeems00CIIxjh+LxHbW5PfSjVyrCWt/uXmhI+pFn0nbo84AWbpFYX9S/C/Lfjzy//rjcfj643Em0AIAPLJ5lysLUA3+PLqF9T0t8r/45iBcfHOQ+jv0m1dODruyANXgz6MbrT8CEwA5yFgkgE8GGRMB/WGZcvNCuH9eQUi3MJHfxMa3mJlGlCCA+gCP/Px0E50IQeynkYBKACQzwLjtb0T/cwd+xw8oJ4HODVtt4E+6mM/3KieBnsGjNvCHESXbQM01awEAwDh+DACsBWLRkgA52RPv/Ho5ANktqxyShn6glUJkl4IQALJKT9r/asQPfM3jB8BYsxEAZncHyVgPIKN+Ed1UiB/4ms/3gvFqHwDM7g6SsR5ARv0iugUigNOXp7gbQwMfEQBJBFBfI/CbDPhuEXzAk5M+iG6yhGcCxkWASSCHLBNg1gMg8/gBy26MCERJgAf405AJAICDCERJgAf4pWcA1alybkehVPOrue+4cQ0W33QTAa0sU5o5D+BTL2aBPn4PdF8e3aLaIojbjdti2yBAgCzyS6KQ9qNyiAwATEM/NJL/L12/xm93HfDJqBzfKfTevpd8iYD2vABtt1EQ3WTJ+FX+dxshwCejcnyn0AsrVvoSAe15AdpuoyC6CZWAvICWBH8SqMmtcvhnFMGzavqlmfOutsn7+OkWFvyDZBk0XUn7gxCgl/3jTdFkQGHtH2/C1gYEADDt9qfR/9Wpcq60BWrl3c94/q60ZS8cfn0T9dzSjbsc0Ttr2yitlLN04y5mu+i+PLrJCvyqU+Xc+hGoHVq+zPN360fOwKPtS6jnlg8NO6J31rZRWiln+dAws110Xx7daP3BRQBeNVcvgI5CEAmomggiGRBvduNHgDx2q8yAZNkfBgAbwf60+t8LaL3A3wvc8Qj+rlvFdvMdfn2Tr24qsn4voPUCfy9wxyP4xXPuFNLr0fYlvroJPQfAGrj4ZB5vip4MxpvYOuJRkSxiCJoBRU1+KjMg2fbLAsC02p8m/5NlnKQJehI4KiHLOEkT9CSw9BIQb2ZAA+Ywi1eszCPqBTG/XSfjTcGIU9Z9ZROdtl/b7xW5kyWeddv2B75OFvGQ7ePrAiqJgbUIu3xoGAYqY4Gvk0U8ZPv4uoAXMeRlTxQVky+I3D+voKQ2ytIDn6BJsB+PrGUCg7Y/2/aLkESUbd51622xLA7LBntZbS6ec6eDBFivB/F9FQSkXETfi9IItiM7wrwOQPs/e/5vFL/LWgdA/bH35V772DMv9jEBGo/WeYAbr/2HXQ+gtTuyaqXd7voR5yshmryMRrXNRS986BmhyH4CV4Y8seec1Qk3rX9BBjWyvVHsF30dgPZ/9vxfLJRqaHF3btuUZ4SO/iVJFrV/DQDWQrEMIisWSjXa4u49XaOe0Tr6lyRZ2VN1Hcv5TX4Aq8apYoDzLAKKpNinL09RF+fGm/wjQdL2RrGfx3bt/2z7Hwd/AIB12/YrAXieXUD4GgCvDpeuX3PtTlq3bT+EyYBx8B+ojCkBdZ6oP2hWgdql1f/x/sjzTAAUBR199l7qjUR3caiMfnb0FuVGFim3f/FNAOBIi7X/s+l/EvyRzG2bgonKXOp9RLdxqo7+cTn8+iZYtw2EymCsyH/4YNG3lJOYiH8EXNtTByqz/cH9MjjDY0LF8UoGL12QruMS3nWK2kij/TJF+z+b/jc6jvhG8kmQS9eveeoqrT+6pn0j+STI+NWvPHVF0sQ7AVBkEbUErbHiOlanyrnxJssG3hKI1zVps18mAGr/Z8v/+BZPWmStWoKuMeA6em1PFRV8iyetlq5agq4r4Dp6bU9lpoOu9LE+oMy+qrRUOOyDQLQ03egtOvSV8VeR0mw/CW68Nmv/Z8//pN9RSWjdtv1gnuqWVgoK+yQwrUxldBxx6Csy7v36A5VSBipjsPrTE/bxvs8fl1YWkrkLCJWsyEwA7w9PAmC924U1CfCBzLN4JXMCkIMf1zfMAKC1lyb7cSAISgDa/9n1P7ke4EUCOJDzLN7KJAAS/HF9ZW4DddfRx8Dsb6ECPw7ePIu3MkGfBviPti+BgcoYcP1FMHILHLUO1lukpsNx1ULR4KcycH0bXNCtcKzF0LTZj/qAdzug9n92/Y/sZr3jx+g4Qi0HxbUWgMCfJmgbaJitoOh61jt+jK5pajkorrUAHPwfbV9i/0Pfaf2R94t4WNGU0VuqmX3WJMCjodOXpyLbFYH2Zxu9xVl2o9hgfw+xCybN9jv6wWcniPZ/Nv3vBfx4NG10QM081Q0A4MgGLl2/FtmuIPR8gtFxxNZr3TZw6T9bEpK3CwhF/3Z/dJVqZr91HM8Gxq9+FdmuIPRMgtE1bes1UAGX/rMlrNn+yPEMflYKidjE7Ku6JgJPastKgf3SZ3zg0+pavJNYdPKT9cG47Wf5heXLoPZr/ze2/3nB3+V3ChHwlHZYJSC/8hEO/Cy7g9gRFvxd/dHf4iICntIOqwTkVz7CgZ/VH352eL4Kwqt2iE8WNBDJiEh2NEQOfMcAxyKb6lQ5Bz7RbBChTX7HH8CJ234iqsOjQRYQ8Nqt/Z9d/7PAH4Gs0WEttpJEIDsbIIGfFdlXp8o5WiYgS1jgj0DW6LJ225AZgexsgAR+WmSP+oOWCTBLQGji0KIqr0iJBQTWZOCPiLwGPXPiM9Jb3BaZAFj0KDHEZT8rtSeBwMun2v/a/zjw80TYLCKwyIA/I/ACfRrw4/dnkQDt92GAnyfCZhGBRQb8GYEX6NOAH78/iwRov3eVgHjTI7/UkpYeiwotzQ+a4hcDTACv3/LeNy77ZWx71P7Ppv/9+ohVXsGzBIfdGBkI2Y0t7uLt++kg6neR/qABKp4lOPqjP9wfg8d39uDt++ngZ1NO9uT3uqmI+LUrc9ufiP1+W+xU2h81CWj/Z9P/QYFXtd1BdVExDoIAr+r+CKoLswQkoz7Kq3hY4dn1oFp4JptS+2O0Xfs/2/73A1yVdqus84cpE8XVH351fi9pUj0BVIvI4/5puFcQfZIK/tr/jen/KKNtNgnsh6QIb7Stsj+8XvfgJUJrAKpZTUtyfaL9n03/J9HvcerUKP3xf2u06CU87TZyAAAAAElFTkSuQmCC', fw: 64, fh: 64, anims: { idle: [0, 4, 0], hit: [0, 2, 4] } },
+  key:      { src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAAAgCAYAAABEmHeFAAAC1UlEQVR42u2bMW7jMBBFR4YPEaSQgFQ5gk7gI6TOEVz6CClS+Aipc4ScQNsFiy1SGSsXQU6wxSKAUlhUhrREkSKHEuL/AMOyEWv+kH/ooawQAQAAAAAAAAAAl0p+vWkwCuBizd/8/92gCAC+AQAAKC4AKL/eNOoxd3sVquMnF/RSxiaGX1Lln7lMcF2tu/eK8pOIiI7vL9kUgVM+xz+vtBTlJ4WcK8Zg19V6dh2anv3xNDbbfBZNnV9aHUrLVL+kyD9zMRtdPZyeP3ZaIaQc5E7P1UOnY07zLa4YlenKG6LqkLwINA1KBxFRdRAvypD8s1HzW0g18TY9c5jP1DN7IXLj8bFJVAQ2DdJ6QvNfTTW/ao2k+zwfPcCYn/0xzfw4mD+VHt94dme17Ybq+7v9AGtDfDaDMapfaan/PnYahuKnbgEk442OcXnzPTaOhoy+wWftBzehen+J+a+tq21rfj6xRblp6mo3XBBDx+1no5mkPa+2T/nYGXsEWVNqYyAYr6/HPTNVdSCiXK6fV7GGjlsNZttRbDdNvT9oBVFs/cZJMv/zb4CzSu056dnf3Dkc0/QJ0uLlIxruwuN5a5KP9+v13+ng9Y/+bPvbGPHMWEPHrudaWP4rdMrgklmZPTPv3/hGQj3M/qrY5trDfF96E9QXd65Nl1Tv/3z/9v0993SrHfPXEvH64qjXffGf7980v/Sdy7f9kczf6fLK2KZCJZTCbDE2eD8V02yS2OY8pY7QuKu+xMyV27b6Sm8yffQAClptp86P6yqcQo9vvMz5SoCj+dWKcHx/ycyfp/nKEXxlwtDAV6LTlQbZn+BNPdK/dKoVjpuN5x7aagzF4+fic+vSOknoiZ2/271AAfd22AYtxHQ2w0lfk+daUt3rMpYXN0GsldZ37szC4T17LD0p89dOHuvuPtwNKqsHd4Mu+KIH/uMMXDwwPwAAAAAAAAAAAAAAIC1fdimIdxGHuZ8AAAAASUVORK5CYII=', fw: 32, fh: 32, anims: { spin: [0, 6] } },
+  tiles:    { src: 'data:image/png;base64,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', fw: 32, fh: 32, anims: {} },   // drawn by index with Sprites.tile()
+  logo:     { src: 'data:image/png;base64,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', fw: 1600, fh: 200, anims: {} },
+  items:    { src: '', fw: 32, fh: 32, anims: { coin: [0, 4], heart: [1, 1] } },
+};
+// dungeon-tiles.png indexes (see dungeon-tiles.md)
+const TI = { floorA: 0, floorB: 1, wallTop: 2, wallSide: 3, corner: 4, doorLocked: 5, doorOpen: 6, terminal: 7, spikes: 8, torch0: 9, torch1: 10, crate: 11 };
+const Sprites = {
+  img: {},
+  load() {
+    for (const k in SPRITE_SHEETS) {
+      const S = SPRITE_SHEETS[k]; if (!S.src || S.src.startsWith('%%')) continue;
+      const im = new Image(); im.onload = () => { this.img[k] = im; }; im.onerror = () => {}; im.src = S.src;
+    }
+  },
+  has(name) { return !!this.img[name]; },
+  // draws frame `frame` of `anim` with its top-left at (x, y). opt.scale, opt.flip. Falls back to the procedural pixel art.
+  draw(name, anim, frame, x, y, opt) {
+    const S = SPRITE_SHEETS[name], im = this.img[name]; opt = opt || {};
+    if (S && im && S.anims[anim]) {
+      const [row, n, c0 = 0] = S.anims[anim]; const f = ((frame | 0) % n + n) % n, sc = opt.scale || 1, w = S.fw * sc, h = S.fh * sc;
+      const sx = (c0 + f) * S.fw, sy = row * S.fh;
+      if (opt.flip) { ctx.save(); ctx.translate(Math.round(x) + w, Math.round(y)); ctx.scale(-1, 1); ctx.drawImage(im, sx, sy, S.fw, S.fh, 0, 0, w, h); ctx.restore(); }
+      else ctx.drawImage(im, sx, sy, S.fw, S.fh, Math.round(x), Math.round(y), w, h);
+      return true;
+    }
+    const fbName = (S && S.fb) || name;
+    if (PROC[fbName]) PROC[fbName](Math.round(x), Math.round(y), name === 'heroIdle' ? anim : anim, frame | 0, opt);
+    return false;
+  },
+  // one 32x32 tile of dungeon-tiles.png by index; sub = [sy, sh] draws only a horizontal slice. Returns false if the sheet isn't loaded.
+  tile(idx, x, y, flip, sub) {
+    const im = this.img.tiles; if (!im) return false;
+    const sx = (idx % 6) * 32, sy = Math.floor(idx / 6) * 32, oy = sub ? sub[0] : 0, sh = sub ? sub[1] : 32;
+    if (flip) { ctx.save(); ctx.translate(x + 32, y); ctx.scale(-1, 1); ctx.drawImage(im, sx, sy + oy, 32, sh, 0, oy, 32, sh); ctx.restore(); }
+    else ctx.drawImage(im, sx, sy + oy, 32, sh, x, y + oy, 32, sh);
+    return true;
+  },
+};
+
+// procedural placeholder art. P(gx, gy, gw, gh, colour) fills on a 16x16 grid (2 px per art pixel) inside a 32x32 frame
+let _ox = 0, _oy = 0;
+const P = (gx, gy, gw, gh, c) => { ctx.fillStyle = c; ctx.fillRect(_ox + gx * 2, _oy + gy * 2, gw * 2, gh * 2); };
+const HERO_COL = { hair: '#3a2a1a', skin: '#ffd9b3', hood: '#5a3cf0', hoodD: '#3a22b0', legs: '#2a2d5c', shoe: '#14152e', eye: '#222', cheek: '#ffb3a7', white: '#fff' };
+function heroArt(x, y, dir, f, col) {
+  const C = col || HERO_COL, s = [0, 1, 0, -1][f & 3];
+  ctx.fillStyle = 'rgba(0,0,0,.28)'; ctx.beginPath(); ctx.ellipse(x + 16, y + 31, 9, 3, 0, 0, 7); ctx.fill();
+  _ox = x; _oy = y;
+  if (dir === 'right') { ctx.save(); ctx.translate(x + 32, y); ctx.scale(-1, 1); _ox = 0; _oy = 0; }
+  if (dir === 'down' || dir === 'up') {
+    P(5, 12, 2, 2 - (s > 0), C.legs); P(5, 14 - (s > 0), 2, 1, C.shoe);
+    P(9, 12, 2, 2 - (s < 0), C.legs); P(9, 14 - (s < 0), 2, 1, C.shoe);
+    P(4, 7, 8, 5, C.hood); P(4, 7, 1, 5, C.hoodD); P(11, 7, 1, 5, C.hoodD);
+    P(3, 8, 1, 3, C.hood); P(3, 11 - (s > 0), 1, 1, C.skin); P(12, 8, 1, 3, C.hood); P(12, 11 - (s < 0), 1, 1, C.skin);
+    if (dir === 'down') {
+      P(5, 10, 1, 1, C.white); P(6, 9, 1, 1, C.white); P(6, 11, 1, 1, C.white);        // <
+      P(8, 9, 1, 1, C.white); P(7, 10, 1, 1, C.white); P(7, 11, 1, 1, C.white);        // /
+      P(9, 9, 1, 1, C.white); P(10, 10, 1, 1, C.white); P(9, 11, 1, 1, C.white);       // >
+      P(4, 1, 8, 6, C.skin); P(4, 0, 8, 2, C.hair); P(3, 1, 1, 4, C.hair); P(12, 1, 1, 4, C.hair); P(4, 2, 3, 1, C.hair); P(9, 2, 2, 1, C.hair);
+      P(6, 3, 1, 2, C.eye); P(9, 3, 1, 2, C.eye); P(5, 5, 1, 1, C.cheek); P(10, 5, 1, 1, C.cheek);
+    } else {
+      P(5, 7, 6, 2, C.hoodD);
+      P(4, 0, 8, 7, C.hair); P(3, 1, 1, 4, C.hair); P(12, 1, 1, 4, C.hair); P(5, 6, 6, 1, C.skin);
+    }
+  } else { // side view, drawn facing left (mirrored for right)
+    P(6 + s, 12, 2, 2, C.legs); P(6 + s - 1, 14, 3, 1, C.shoe);
+    P(8 - s, 12, 2, 2, C.legs); P(8 - s - 1, 14, 3, 1, C.shoe);
+    P(5, 7, 6, 5, C.hood); P(10, 7, 1, 5, C.hoodD); P(7 - s, 8, 2, 3, C.hoodD); P(7 - s, 11, 2, 1, C.skin);
+    P(4, 1, 8, 6, C.skin); P(4, 0, 8, 2, C.hair); P(8, 1, 4, 5, C.hair); P(4, 2, 2, 1, C.hair);
+    P(5, 3, 1, 2, C.eye); P(4, 5, 1, 1, C.cheek);
+  }
+  if (dir === 'right') ctx.restore();
+}
+// the red bug from Code Quest (same shapes and colours, now crawling around a dungeon)
+function drawBug(x, y, w, h, dir, t, col) {
+  const leg = Math.sin(t * 14) * 3;
+  ctx.strokeStyle = '#222'; ctx.lineWidth = Math.max(2, w / 15);
+  for (let i = 0; i < 3; i++) { const lx = x + w * (0.25 + i * 0.25); ctx.beginPath(); ctx.moveTo(lx, y + h * .7); ctx.lineTo(lx + (i % 2 ? leg : -leg), y + h); ctx.stroke(); }
+  ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(x + w / 2, y + h * .5, w / 2, h * .45, 0, 0, 7); ctx.fill();
+  ctx.strokeStyle = 'rgba(0,0,0,.35)'; ctx.beginPath(); ctx.moveTo(x + w / 2, y + h * .1); ctx.lineTo(x + w / 2, y + h * .9); ctx.stroke();
+  ctx.fillStyle = '#222'; for (const [a, b] of [[.3, .35], [.7, .55], [.35, .7]]) { ctx.beginPath(); ctx.arc(x + w * a, y + h * b, w / 14, 0, 7); ctx.fill(); }
+  const ex = dir > 0 ? x + w * .78 : x + w * .22;
+  ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(ex - 4 * (w / 30), y + h * .32, w / 9, 0, 7); ctx.arc(ex + 4 * (w / 30), y + h * .32, w / 9, 0, 7); ctx.fill();
+  ctx.fillStyle = '#000'; ctx.beginPath(); ctx.arc(ex - 4 * (w / 30) + dir * 1.5, y + h * .33, w / 20, 0, 7); ctx.arc(ex + 4 * (w / 30) + dir * 1.5, y + h * .33, w / 20, 0, 7); ctx.fill();
+}
+const PROC = {
+  hero(x, y, dir, f, o) { heroArt(x, y, dir, f, o.col); },
+  logo() {},
+  bug(x, y, anim, f, o) {
+    ctx.fillStyle = 'rgba(0,0,0,.28)'; ctx.beginPath(); ctx.ellipse(x + 16, y + 28, 12, 4, 0, 0, 7); ctx.fill();
+    drawBug(x + 3, y + 6, 26, 22, o.dir || 1, o.t || 0, o.col || '#e8344e');
+  },
+  squash(x, y, anim, f, o) { ctx.fillStyle = `rgba(255,210,63,${Math.max(0, 1 - f / 3)})`; ctx.beginPath(); ctx.arc(x + 16, y + 16, 8 + f * 6, 0, 7); ctx.fill(); },
+  key(x, y, anim, f, o) { ctx.fillStyle = '#ffd23f'; ctx.beginPath(); ctx.arc(x + 10, y + 16, 6, 0, 7); ctx.fill(); ctx.fillRect(x + 14, y + 14, 14, 4); ctx.fillRect(x + 24, y + 18, 3, 5); },
+  boss(x, y, anim, f, o) {
+    const B = o.boss || { weak: [] }, t = o.t || 0; const sc = (o.scale || 2) / 2 * 128 / 96; ctx.save(); ctx.translate(x, y); ctx.scale(sc, sc); x = 0; y = 0;
+    ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.beginPath(); ctx.ellipse(x + 48, y + 90, 44, 9, 0, 0, 7); ctx.fill();
+    // horns
+    ctx.fillStyle = '#3a0d18';
+    ctx.beginPath(); ctx.moveTo(x + 22, y + 22); ctx.lineTo(x + 10, y + 2); ctx.lineTo(x + 32, y + 16); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(x + 74, y + 22); ctx.lineTo(x + 86, y + 2); ctx.lineTo(x + 64, y + 16); ctx.fill();
+    drawBug(x, y + 10, 96, 82, o.dir || 1, t * .6, anim === 'hit' ? '#ff8a9c' : '#c41f3a');
+    // weak points: armoured (code plate), open (glowing), gone (cracked)
+    for (const w of B.weak) {
+      const wx = x + 48 + w.ox, wy = y + 52 + w.oy;
+      if (w.state === 'armor') {
+        ctx.fillStyle = '#6d7a99'; ctx.fillRect(wx - 11, wy - 9, 22, 18); ctx.fillStyle = '#9aa7c4'; ctx.fillRect(wx - 11, wy - 9, 22, 4);
+        ctx.fillStyle = '#1d1b3a'; ctx.font = 'bold 10px monospace'; ctx.textAlign = 'center'; ctx.fillText('{ }', wx, wy + 5); ctx.textAlign = 'left';
+      } else if (w.state === 'open') {
+        const p = 0.6 + Math.sin(t * 8) * 0.4;
+        ctx.fillStyle = `rgba(255,210,63,${0.35 * p})`; ctx.beginPath(); ctx.arc(wx, wy, 17, 0, 7); ctx.fill();
+        ctx.fillStyle = '#ffd23f'; ctx.beginPath(); ctx.arc(wx, wy, 9, 0, 7); ctx.fill();
+        ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(wx - 2, wy - 2, 3, 0, 7); ctx.fill();
+        for (let i = 0; i < w.hp; i++) { ctx.fillStyle = '#ffd23f'; ctx.fillRect(wx - 8 + i * 6, wy - 22, 4, 4); }
+      } else {
+        ctx.strokeStyle = '#1a0610'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(wx - 7, wy - 6); ctx.lineTo(wx, wy); ctx.lineTo(wx - 3, wy + 7); ctx.moveTo(wx, wy); ctx.lineTo(wx + 7, wy - 3); ctx.stroke();
+      }
+    }
+    ctx.restore();
+  },
+  tiles(x, y, anim, f, o) {
+    const pal = o.pal;
+    if (anim === 'floor') {
+      ctx.fillStyle = f ? pal.floor2 : pal.floor; ctx.fillRect(x, y, 32, 32);
+      ctx.fillStyle = pal.grout; ctx.fillRect(x, y, 32, 1); ctx.fillRect(x, y, 1, 32);
+      const h = o.seed % 7;
+      if (h === 1) { ctx.fillRect(x + 8, y + 10, 2, 2); ctx.fillRect(x + 20, y + 22, 2, 2); }
+      if (h === 3) { ctx.fillRect(x + 14, y + 6, 6, 1); ctx.fillRect(x + 18, y + 7, 1, 3); }
+      if (h === 5) { ctx.fillRect(x + 24, y + 12, 2, 2); }
+    } else if (anim === 'wall' || anim === 'walltorch') {
+      ctx.fillStyle = pal.wallDark; ctx.fillRect(x, y, 32, 32);
+      ctx.fillStyle = pal.wall;
+      for (let r = 0; r < 4; r++) { const off = r % 2 ? 8 : 0; for (let c = -1; c < 3; c++) { const bx = x + c * 16 + off; ctx.fillRect(Math.max(x, bx + 1), y + r * 8 + 1, Math.min(x + 32, bx + 15) - Math.max(x, bx + 1), 6); } }
+      if (o.top) { ctx.fillStyle = pal.wallTop; ctx.fillRect(x, y, 32, 5); }
+      if (anim === 'walltorch') {
+        ctx.fillStyle = '#5c4033'; ctx.fillRect(x + 13, y + 16, 6, 10);
+        const fl = Math.sin(o.t * 12 + x) * 2;
+        ctx.fillStyle = 'rgba(255,170,60,.18)'; ctx.beginPath(); ctx.arc(x + 16, y + 12, 16, 0, 7); ctx.fill();
+        ctx.fillStyle = '#ff8a2a'; ctx.fillRect(x + 12, y + 6 + fl, 8, 10 - fl); ctx.fillStyle = '#ffd23f'; ctx.fillRect(x + 14, y + 10, 4, 6);
+      }
+    } else if (anim === 'crate') {
+      ctx.fillStyle = 'rgba(0,0,0,.3)'; ctx.fillRect(x + 2, y + 26, 30, 6);
+      ctx.fillStyle = pal.crate; ctx.fillRect(x + 2, y + 2, 28, 26);
+      ctx.fillStyle = pal.crateDark; ctx.fillRect(x + 2, y + 2, 28, 3); ctx.fillRect(x + 2, y + 25, 28, 3); ctx.fillRect(x + 2, y + 2, 3, 26); ctx.fillRect(x + 27, y + 2, 3, 26);
+      for (let i = 0; i < 20; i++) { ctx.fillRect(x + 5 + i, y + 5 + i, 3, 2); ctx.fillRect(x + 24 - i, y + 5 + i, 3, 2); }
+    } else if (anim === 'torch') { // puzzle torch stand: f = 1 when lit
+      ctx.fillStyle = 'rgba(0,0,0,.3)'; ctx.beginPath(); ctx.ellipse(x + 16, y + 29, 10, 3, 0, 0, 7); ctx.fill();
+      ctx.fillStyle = '#6d6a99'; ctx.fillRect(x + 10, y + 14, 12, 15); ctx.fillStyle = '#4b4875'; ctx.fillRect(x + 8, y + 12, 16, 4);
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 10px monospace'; ctx.textAlign = 'center'; ctx.fillText(String(o.n), x + 16, y + 26); ctx.textAlign = 'left';
+      if (f) {
+        const fl = Math.sin(o.t * 14 + x) * 2;
+        ctx.fillStyle = 'rgba(255,170,60,.25)'; ctx.beginPath(); ctx.arc(x + 16, y + 6, 18, 0, 7); ctx.fill();
+        ctx.fillStyle = '#ff8a2a'; ctx.fillRect(x + 10, y + fl - 2, 12, 14 - fl); ctx.fillStyle = '#ffd23f'; ctx.fillRect(x + 13, y + 4, 6, 8);
+      } else { ctx.fillStyle = '#2b2442'; ctx.fillRect(x + 11, y + 9, 10, 3); }
+    } else if (anim === 'terminal') { // f = 1 when fixed
+      ctx.fillStyle = 'rgba(0,0,0,.3)'; ctx.fillRect(x + 3, y + 26, 28, 6);
+      ctx.fillStyle = '#3d3870'; ctx.fillRect(x + 4, y + 2, 24, 26); ctx.fillStyle = '#5a5596'; ctx.fillRect(x + 4, y + 2, 24, 3);
+      const on = f ? '#2ee6a6' : (Math.floor(o.t * 3) % 2 ? '#ff4d6a' : '#b8203a');
+      ctx.fillStyle = '#0f0c22'; ctx.fillRect(x + 7, y + 7, 18, 13);
+      ctx.fillStyle = on; ctx.font = 'bold 8px monospace'; ctx.textAlign = 'center'; ctx.fillText(f ? 'OK' : 'BUG', x + 16, y + 17); ctx.textAlign = 'left';
+      ctx.fillStyle = f ? 'rgba(46,230,166,.18)' : 'rgba(255,77,106,.18)'; ctx.beginPath(); ctx.arc(x + 16, y + 14, 20, 0, 7); ctx.fill();
+    }
+  },
+  items(x, y, anim, f, o) {
+    if (anim === 'coin') {
+      const t = o.t, w = Math.max(2, Math.abs(Math.cos(t * 4)) * 12), bob = Math.sin(t * 3) * 2;
+      ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.beginPath(); ctx.ellipse(x + 16, y + 26, 6, 2, 0, 0, 7); ctx.fill();
+      ctx.fillStyle = '#c98a00'; ctx.fillRect(x + 16 - w / 2, y + 8 + bob, w, 14);
+      ctx.fillStyle = '#ffd23f'; ctx.fillRect(x + 16 - w / 2 + 1, y + 9 + bob, Math.max(1, w - 2), 12);
+      if (w > 6) { ctx.fillStyle = '#fff6c4'; ctx.fillRect(x + 16 - w / 2 + 2, y + 10 + bob, 2, 6); }
+    } else if (anim === 'heart') {
+      const bob = Math.sin(o.t * 3) * 2; _ox = x; _oy = y + bob;
+      const R = '#ff4d6a', D = '#c41f3a';
+      P(4, 5, 3, 1, R); P(9, 5, 3, 1, R); P(3, 6, 10, 3, R); P(4, 9, 8, 1, R); P(5, 10, 6, 1, D); P(6, 11, 4, 1, D); P(7, 12, 2, 1, D); P(4, 6, 1, 1, '#fff');
+    }
+  },
+};
+
+// ======================================================================
+//  FULLSCREEN (Fullscreen API with webkit fallback; iPhone Safari has none → Home Screen tip)
+// ======================================================================
+const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement || null;
+const fsSupported = () => !!(document.fullscreenEnabled || document.webkitFullscreenEnabled) &&
+  !!(document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen);
+const isStandalone = () => !!(navigator.standalone || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+  (window.matchMedia && window.matchMedia('(display-mode: fullscreen)').matches));
+const isIOSPhone = () => /iPhone|iPod/.test(navigator.userAgent || '');
+const fsLabel = () => fsEl() ? '⛶ Exit fullscreen' : '⛶ Fullscreen';
+function toggleFullscreen() {
+  if (!fsSupported()) { if (isIOSPhone() && !isStandalone()) toast('Add to Home Screen to play fullscreen 📲', 2.5); return; }
+  try {
+    if (fsEl()) { const x = document.exitFullscreen || document.webkitExitFullscreen; if (x) { const p = x.call(document); if (p && p.catch) p.catch(() => {}); } }
+    else { const d = document.documentElement, r = d.requestFullscreen || d.webkitRequestFullscreen; const p = r.call(d); if (p && p.catch) p.catch(() => {}); }
+  } catch (e) {}
+}
+const fsMenuHtml = () => fsSupported() ? `<button class="btn alt" id="bFs">${fsLabel()}</button>` : '';
+const fsTipHtml = () => !fsSupported() && isIOSPhone() && !isStandalone() ? '<p class="muted" id="fsTip">📲 Tip: tap Share → <b>Add to Home Screen</b> to play fullscreen.</p>' : '';
+function syncFsUi() {
+  const b = document.getElementById('bFs'); if (b) b.textContent = fsLabel();
+  const h = document.getElementById('tFs');
+  if (h) { h.style.display = fsSupported() ? '' : 'none'; h.setAttribute('aria-label', fsEl() ? 'Exit fullscreen' : 'Fullscreen'); }
+}
+['fullscreenchange', 'webkitfullscreenchange'].forEach(t => document.addEventListener(t, () => { syncFsUi(); resizeSoon(); }));
+
+// ======================================================================
+//  AUDIO (WebAudio synth, no files) + persistent mute
+// ======================================================================
+let actx = null, muted = false;
+try { muted = localStorage.getItem('bh_muted') === '1'; } catch (e) {}
+const soundLabel = () => `🔊 Sound: ${muted ? 'off' : 'on'}`;
+function setMuted(v) {
+  muted = !!v;
+  try { localStorage.setItem('bh_muted', muted ? '1' : '0'); } catch (e) {}
+  const b = document.getElementById('bMute'); if (b) b.textContent = soundLabel();
+}
+function audio() {
+  if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+  if (actx.state === 'suspended') actx.resume();
+  return actx;
+}
+function beep(freq, dur = 0.1, type = 'square', vol = 0.06, slide = 0, delay = 0) {
+  if (muted) return;
+  try {
+    const a = audio(), o = a.createOscillator(), g = a.createGain(), t = a.currentTime + delay;
+    o.type = type; o.frequency.setValueAtTime(freq, t);
+    if (slide) o.frequency.exponentialRampToValueAtTime(Math.max(40, freq + slide), t + dur);
+    g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g); g.connect(a.destination); o.start(t); o.stop(t + dur + 0.02);
+  } catch (e) { }
+}
+function noise(dur = 0.3, vol = 0.05, freq = 800, delay = 0) {
+  if (muted) return;
+  try {
+    const a = audio(), n = Math.floor(a.sampleRate * dur), buf = a.createBuffer(1, n, a.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+    const src = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain(), t = a.currentTime + delay;
+    f.type = 'lowpass'; f.frequency.value = freq; g.gain.value = vol;
+    src.buffer = buf; src.connect(f); f.connect(g); g.connect(a.destination); src.start(t);
+  } catch (e) { }
+}
+const SFX = {
+  coin: () => { beep(988, 0.07); beep(1319, 0.12, 'square', 0.06, 0, 0.06); },
+  zap: () => beep(1400, 0.12, 'sawtooth', 0.035, -1000),
+  squash: () => { beep(260, 0.12, 'square', 0.06, -180); noise(0.12, 0.05, 1200); },
+  hurt: () => beep(180, 0.3, 'sawtooth', 0.06, -120),
+  heart: () => [660, 880, 1100].forEach((f, i) => beep(f, 0.1, 'triangle', 0.07, 0, i * 0.07)),
+  good: () => [523, 659, 784, 1047].forEach((f, i) => beep(f, 0.14, 'triangle', 0.08, 0, i * 0.09)),
+  bad: () => { beep(200, 0.2, 'sawtooth', 0.05); beep(150, 0.25, 'sawtooth', 0.05, 0, 0.15); },
+  click: () => beep(700, 0.04, 'square', 0.03),
+  clink: () => { beep(1800, 0.05, 'triangle', 0.05); beep(1200, 0.08, 'triangle', 0.04, 0, 0.04); },
+  locked: () => { beep(140, 0.12, 'square', 0.05); beep(110, 0.15, 'square', 0.05, 0, 0.1); },
+  torch: () => { noise(0.25, 0.06, 2500); beep(600, 0.15, 'triangle', 0.05, 300); },
+  door: () => { noise(1.0, 0.07, 400); [392, 523, 659, 784, 1047, 1319].forEach((f, i) => beep(f, 0.2, 'triangle', 0.07, 0, 0.15 + i * 0.08)); beep(2093, 0.5, 'sine', 0.04, 0, 0.7); },
+  bossHit: () => { beep(320, 0.15, 'square', 0.07, -200); noise(0.15, 0.06, 900); },
+  bossBreak: () => { noise(0.5, 0.08, 1500); [880, 660, 1320].forEach((f, i) => beep(f, 0.15, 'square', 0.05, 0, i * 0.08)); },
+  bossDie: () => { noise(1.2, 0.09, 600); [523, 659, 784, 1047, 784, 1047, 1319].forEach((f, i) => beep(f, 0.18, 'triangle', 0.08, 0, 0.3 + i * 0.1)); },
+  clang: () => { beep(900, 0.06, 'square', 0.04); beep(600, 0.1, 'triangle', 0.04, 0, 0.05); },
+  spit: () => beep(300, 0.18, 'sawtooth', 0.04, 200),
+  win: () => [523, 659, 784, 659, 784, 1047].forEach((f, i) => beep(f, 0.16, 'triangle', 0.08, 0, i * 0.11)),
+};
+
+// ======================================================================
+//  SAVES – bh_save = { v: 1, unlocked: n, last: k, rooms: { roomId: { done, coins, quiz } } }
+// ======================================================================
+function loadSave() {
+  let s = null;
+  try { s = JSON.parse(localStorage.getItem('bh_save') || 'null'); } catch (e) { s = null; }
+  if (!s || s.v !== 1 || typeof s.rooms !== 'object' || !s.rooms) s = { v: 1, unlocked: 1, last: 0, rooms: {} };
+  s.unlocked = Math.max(1, Math.min(ROOMS.length, s.unlocked | 0));
+  s.last = Math.max(0, Math.min(s.unlocked - 1, s.last | 0));
+  return s;
+}
+function saveGame() { try { localStorage.setItem('bh_save', JSON.stringify(G.save)); } catch (e) { } }
+const totalCoins = () => Object.values(G.save.rooms).reduce((a, r) => a + (r.coins || 0), 0);
+
+
+// ======================================================================
+//  CORE GAME
+// ======================================================================
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const G = { save: null, mode: 'title', k: 0, t: 0, room: null };
+const $ = id => document.getElementById(id);
+
+// ---------- device + layout (undistorted canvas on every resize / rotation) ----------
+function detectDevice() {
+  const mm = q => !!(window.matchMedia && window.matchMedia(q).matches);
+  const ua = navigator.userAgent || '', mtp = navigator.maxTouchPoints || 0;
+  const forced = (location.search.match(/[?&]device=(phone|tablet|desktop)/) || [])[1];
+  if (forced) return forced;
+  const isIPad = /iPad/.test(ua) || (navigator.platform === 'MacIntel' && mtp > 1);
+  const touch = mtp > 0 || 'ontouchstart' in window || mm('(any-pointer: coarse)');
+  const shortSide = Math.min(screen.width || innerWidth, screen.height || innerHeight, innerWidth, innerHeight);
+  if (isIPad) return 'tablet';
+  if (/iPhone|iPod/.test(ua) || (/Android/.test(ua) && /Mobile/.test(ua))) return 'phone';
+  if (touch && mm('(pointer: coarse)')) return shortSide < 600 ? 'phone' : 'tablet';
+  return 'desktop';
+}
+const DEV = { type: detectDevice() };
+document.body.classList.add('dev-' + DEV.type);
+function safeInsets() {
+  const cs = getComputedStyle($('safe'));
+  return { t: parseFloat(cs.paddingTop) || 0, r: parseFloat(cs.paddingRight) || 0, b: parseFloat(cs.paddingBottom) || 0, l: parseFloat(cs.paddingLeft) || 0 };
+}
+function resize() {
+  const W = innerWidth, H = innerHeight, S = safeInsets(), wrap = $('wrap');
+  wrap.style.width = W + 'px'; wrap.style.height = H + 'px';
+  const dpr = Math.min(2, devicePixelRatio || 1);
+  cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+  const minSide = Math.min(W, H), phone = DEV.type === 'phone', rs = document.documentElement.style;
+  wrap.style.fontSize = Math.max(12, Math.min(18, minSide / (phone ? 26 : 40))) + 'px';
+  const tb = phone ? Math.max(60, Math.min(96, minSide * 0.2)) : Math.max(64, Math.min(110, minSide * 0.11));
+  rs.setProperty('--tb', Math.round(tb) + 'px'); rs.setProperty('--tg', Math.round(tb * 0.22) + 'px');
+  rs.setProperty('--sl', S.l + 'px'); rs.setProperty('--sr', S.r + 'px'); rs.setProperty('--sb', S.b + 'px'); rs.setProperty('--st', S.t + 'px');
+  updateOrientation();
+}
+let _rs = 0; function resizeSoon() { resize(); clearTimeout(_rs); _rs = setTimeout(resize, 250); } // iOS reports the final size late after rotating
+addEventListener('resize', resizeSoon);
+addEventListener('orientationchange', resizeSoon);
+if (window.visualViewport) visualViewport.addEventListener('resize', resizeSoon);
+let portraitOK = false;
+function updateOrientation() {
+  const portrait = innerHeight > innerWidth;
+  const need = DEV.type === 'phone' && portrait && !portraitOK;
+  const r = $('rotate'), was = r.classList.contains('show');
+  r.classList.toggle('show', need); document.body.classList.toggle('rotated', need);
+  if (need && !was && G.mode === 'play') pauseMenu();
+  $('tip').classList.toggle('show', DEV.type === 'tablet' && portrait && G.mode !== 'play');
+  if (!portrait) portraitOK = false;
+}
+
+let _tt = 0;
+function toast(msg, sec = 1.6) { const el = $('toast'); el.innerHTML = msg; el.classList.add('show'); clearTimeout(_tt); _tt = setTimeout(() => el.classList.remove('show'), sec * 1000); }
+function showCard(html, cls) { const c = $('card'); c.className = 'card' + (cls ? ' ' + cls : ''); c.innerHTML = html; c.scrollTop = 0; $('overlay').classList.add('show'); }
+function hideCard() { $('overlay').classList.remove('show'); }
+
+// ---------- floating texts: one per spot, a new one REPLACES any nearby one (no stacking) ----------
+function floatText(x, y, txt, col) {
+  const L = G.room; if (!L) return;
+  L.floats = L.floats.filter(f => Math.abs(f.x - x) > 70 || Math.abs(f.y - y) > 30);
+  if (L.floats.length >= 4) L.floats.shift();
+  L.floats.push({ x, y, txt, col: col || '#fff', t: 1.3 });
+}
+
+// ---------- input ----------
+const keys = {};
+let isTouch = false, joy = { x: 0, y: 0, id: null };
+addEventListener('keydown', e => {
+  if (isTouch && e.key.length > 0 && !e.isComposing) { isTouch = false; Object.assign(CTRL, CTRL_SETS.keys); refreshCtl(); document.body.classList.remove('in-touch'); }
+  keys[e.key.toLowerCase()] = true;
+  if (G.mode === 'play' && (e.key === ' ' || e.key.toLowerCase() === 'j')) { e.preventDefault(); zap(); }
+  if (e.key.toLowerCase() === 'm') setMuted(!muted);
+  if (e.key.toLowerCase() === 'f') toggleFullscreen();
+  if (G.mode !== 'play' && /^[1-9]$/.test(e.key)) { const b = document.querySelector(`#card [data-n="${e.key}"]`); if (b && !b.disabled) b.click(); }
+  if (G.mode !== 'play' && e.key === 'Enter') { const b = document.querySelector('.card .go'); if (b && !b.disabled) { e.preventDefault(); b.click(); } }
+  if (G.mode !== 'play' && e.key === 'Backspace') { const b = document.querySelector('.slots .ln:last-child'); if (b) b.click(); }
+});
+addEventListener('keyup', e => { keys[e.key.toLowerCase()] = false; });
+addEventListener('blur', () => { for (const k in keys) keys[k] = false; });
+function goTouch() { if (!isTouch) { isTouch = true; Object.assign(CTRL, CTRL_SETS.touch); refreshCtl(); } document.body.classList.add('in-touch'); }
+addEventListener('touchstart', goTouch, { passive: true });
+const joyEl = $('joy'), knob = $('knob');
+joyEl.addEventListener('pointerdown', e => { goTouch(); joy.id = e.pointerId; try { joyEl.setPointerCapture(e.pointerId); } catch (_) {} joyEl.classList.add('on'); joyMove(e); });
+joyEl.addEventListener('pointermove', e => { if (e.pointerId === joy.id) joyMove(e); });
+const joyEnd = e => { if (e.pointerId === joy.id) { joy.id = null; joy.x = joy.y = 0; knob.style.transform = ''; joyEl.classList.remove('on'); } };
+joyEl.addEventListener('pointerup', joyEnd); joyEl.addEventListener('pointercancel', joyEnd);
+function joyMove(e) {
+  const r = joyEl.getBoundingClientRect(), R = r.width / 2;
+  let dx = (e.clientX - r.left - R) / R, dy = (e.clientY - r.top - R) / R; const m = Math.hypot(dx, dy);
+  if (m > 1) { dx /= m; dy /= m; }
+  joy.x = Math.abs(dx) > .2 ? dx : 0; joy.y = Math.abs(dy) > .2 ? dy : 0;
+  knob.style.transform = `translate(${dx * R * .6}px,${dy * R * .6}px)`;
+}
+$('tZap').addEventListener('pointerdown', e => { e.preventDefault(); $('tZap').classList.add('on'); if (G.mode === 'play') zap(); });
+['pointerup', 'pointercancel', 'pointerleave'].forEach(t => $('tZap').addEventListener(t, () => $('tZap').classList.remove('on')));
+$('tPause').onclick = () => { if (G.mode === 'play') pauseMenu(); };
+$('tFs').onclick = toggleFullscreen;
+$('bPortrait').onclick = () => { portraitOK = true; updateOrientation(); };
+
+// ---------- room building ----------
+function buildRoom(k) {
+  const R = ROOMS[k], map = R.map, H = map.length, W = map[0].length;
+  const L = { R, W, H, grid: [], coins: [], hearts: [], bugs: [], shots: [], fx: [], floats: [], orbs: [], doors: [], terms: [], torches: [], lit: [],
+    open: false, solved: false, got: 0, zapped: 0, hero: null, start: null, boss: null, loop: null };
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const ch = map[y][x]; let g = '.';
+    if (ch === '#' || ch === 'i' || ch === 'o') g = ch;
+    else if (ch === 'D') { g = 'D'; L.doors.push({ x, y }); }
+    else if (ch === 'T') { g = 'T'; L.terms.push({ x, y, fixed: false, i: L.terms.length }); }
+    else if (ch === 't') { g = 't'; L.torches.push({ x, y }); }
+    else if (ch === 'P') L.start = { x: x * TILE + 4, y: y * TILE + 4 };
+    else if (ch === 'c') L.coins.push({ x: x * TILE, y: y * TILE });
+    else if (ch === 'h') L.hearts.push({ x: x * TILE, y: y * TILE });
+    else if (ch === 'b') L.bugs.push(newBug(x * TILE + 3, y * TILE + 3, R.ri >= 2 && L.bugs.length % 3 === 2));
+    else if (ch === 'B') L.boss = newBoss(L, x, y);
+    L.grid.push(g);
+  }
+  if (!L.start) L.start = { x: TILE * 2, y: TILE * (H - 2) };
+  L.hero = { x: L.start.x, y: L.start.y, w: 24, h: 24, dir: 'up', f: 0, hp: 3, inv: 0, cd: 0, moving: false };
+  L.torches.sort((a, b) => a.x - b.x);
+  L.total = L.coins.length;
+  return L;
+}
+function newBug(x, y, fly) { return { x, y, w: 26, h: 26, vx: 0, vy: 0, dir: 1, tm: 0, fly: !!fly }; }
+const cell = (L, x, y) => (x < 0 || y < 0 || x >= L.W || y >= L.H) ? '#' : L.grid[y * L.W + x];
+const solid = (L, x, y) => { const c = cell(L, x, y); return c === '#' || c === 'i' || c === 'o' || c === 'T' || c === 't' || (c === 'D' && !L.open); };
+function hitsWall(L, o, nx, ny) {
+  const x0 = Math.floor(nx / TILE), x1 = Math.floor((nx + o.w - 1) / TILE), y0 = Math.floor(ny / TILE), y1 = Math.floor((ny + o.h - 1) / TILE);
+  for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) if (solid(L, x, y)) return { x, y, c: cell(L, x, y) };
+  return null;
+}
+function moveObj(L, o, dx, dy) {
+  let hit = null, h;
+  if (dx) { h = hitsWall(L, o, o.x + dx, o.y); if (!h) o.x += dx; else hit = h; }
+  if (dy) { h = hitsWall(L, o, o.x, o.y + dy); if (!h) o.y += dy; else hit = hit || h; }
+  return hit;
+}
+const overlap = (a, b, bw = 32, bh = 32) => a.x < b.x + bw && a.x + a.w > b.x && a.y < b.y + bh && a.y + a.h > b.y;
+const isBossRoom = L => !!(L && L.R.boss);
+const dungeonRooms = di => ROOMS.filter(R => R.di === di);
+
+// ---------- flow ----------
+function hud() {
+  const L = G.room; if (!L) return;
+  $('hearts').textContent = '❤️'.repeat(Math.max(0, L.hero.hp));
+  $('coinvar').textContent = `coins = ${L.got}`;
+  $('rname').textContent = `${L.R.icon} ${L.R.name}`;
+}
+function setHud(on) { $('hud').style.display = on ? 'flex' : 'none'; }
+function titleScreen() {
+  G.mode = 'title'; G.room = null; setHud(false);
+  const maps = DUNGEONS.map((D, di) => {
+    const rooms = ROOMS.map((R, k) => [R, k]).filter(([R]) => R.di === di);
+    const path = rooms.map(([R, k]) => {
+      const lock = k >= G.save.unlocked, rec = G.save.rooms[R.id], done = rec && rec.done;
+      return `<button class="rbtn ${done ? 'done' : ''} ${k === G.save.last && !lock ? 'cur' : ''} ${R.boss ? 'boss' : ''}" data-room="${k}" ${lock ? 'disabled' : ''}>
+        <span class="re">${lock ? '🔒' : R.icon}</span><b>${k + 1}. ${R.name}</b><span class="rt">${R.topic}</span><span class="rs">${done ? `✅ 🪙${rec.coins}${rec.quiz ? ' ⭐' : ''}` : ''}</span></button>`;
+    }).join('<span class="lnk"></span>');
+    return `<div class="dgn"><h3>${D.icon} Dungeon ${di + 1}: ${D.name}</h3><div class="path">${path}</div></div>`;
+  }).join('');
+  const logo = Sprites.has('logo') ? `<img class="logo" src="${SPRITE_SHEETS.logo.src}" alt="BUG HUNTERS">` : '<h1>BUG HUNTERS</h1>';
+  showCard(`${logo}<p>Fix buggy code to open each dungeon door. Zap the bugs, grab the coins!</p>
+    <p class="muted">Move: ${ctl('{move}')} · Zap: ${ctl('{zap}')}</p>
+    <div class="dmap">${maps}</div>
+    <p class="row"><button class="btn go" id="bStart">▶ Start room ${G.save.last + 1}</button> <button class="btn alt" id="bMute">${soundLabel()}</button> ${fsMenuHtml()}</p>${fsTipHtml()}`, 'title');
+  $('bStart').onclick = () => { SFX.click(); G.room = null; lesson(G.save.last, 0); };
+  $('bMute').onclick = () => setMuted(!muted);
+  const bf = $('bFs'); if (bf) bf.onclick = toggleFullscreen;
+  document.querySelectorAll('[data-room]').forEach(b => b.onclick = () => { SFX.click(); G.room = null; lesson(+b.dataset.room, 0); });
+  updateOrientation();
+}
+function lesson(k, p) {
+  G.mode = 'lesson'; G.k = k; const R = ROOMS[k], pg = R.lesson[p];
+  if (!G.room || G.room.R !== R) G.room = buildRoom(k);
+  hud(); setHud(true);
+  const parts = pg.parts ? `<div class="parts">${pg.parts.map(([a, b]) => `<div><code>${esc(a)}</code> ${b}</div>`).join('')}</div>` : '';
+  const last = p === R.lesson.length - 1;
+  showCard(`<div class="muted">${R.label} · ${R.topic}</div><h2>${pg.h}</h2>${pg.body}
+    ${pg.code ? `<pre class="prog">${pg.code.split('\n').map(l => `<span class="l">${hl(l)}</span>`).join('')}</pre>` : ''}${parts}
+    ${pg.note ? `<p class="muted">${pg.note}</p>` : ''}
+    <div class="dots">${R.lesson.map((_, i) => `<i class="${i === p ? 'on' : ''}"></i>`).join('')}</div>
+    <p>${p ? '<button class="btn alt" id="bBack">◀ Back</button> ' : ''}<button class="btn go" id="bNext">${last ? '▶ Start room' : 'Next ▶'}</button></p>
+    <p class="muted">${ctl(last ? '{startHint}' : '{nextHint}')}</p>`, 'lesson');
+  $('bNext').onclick = () => { SFX.click(); last ? startPlay() : lesson(k, p + 1); };
+  const bb = $('bBack'); if (bb) bb.onclick = () => lesson(k, p - 1);
+}
+function startPlay() {
+  hideCard(); G.mode = 'play'; hud(); setHud(true);
+  toast(isBossRoom(G.room) ? '👾 Fix a terminal to crack the Big Bug\'s armour!' : `${G.room.R.name}: fix the door's code to escape!`, 2.4);
+}
+function resume() { if ($('rotate').classList.contains('show')) return; hideCard(); G.mode = 'play'; }
+function pauseMenu() {
+  G.mode = 'pause';
+  showCard(`<h2>⏸ Paused</h2><p class="row"><button class="btn go" id="bRes">▶ Resume</button> <button class="btn alt" id="bMute">${soundLabel()}</button> ${fsMenuHtml()} <button class="btn alt" id="bQuit">🏠 Title</button></p>`);
+  $('bRes').onclick = resume;
+  $('bMute').onclick = () => setMuted(!muted);
+  $('bQuit').onclick = titleScreen;
+  const bf = $('bFs'); if (bf) bf.onclick = toggleFullscreen;
+}
+addEventListener('keydown', e => { const k = e.key.toLowerCase(); if ((k === 'p' || k === 'escape') && G.mode === 'play') pauseMenu(); else if ((k === 'p' || k === 'escape') && G.mode === 'pause') resume(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden && G.mode === 'play') pauseMenu(); });
+
+// ---------- code checking (same rules as tests/check-data.mjs) ----------
+function runCase(code, c) {
+  let src = code; if (c.sub) src = src.split(c.sub[0]).join(c.sub[1]);
+  try { return new Function(`${c.pre || ''}\n${src}\nreturn (${c.expect});`)() === true; } catch (e) { return false; }
+}
+const runOk = (code, check) => check.cases.every(c => runCase(code, c));
+const shuffle = a => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [b[i], b[j]] = [b[j], b[i]]; } return b; };
+const fixedProgram = (S, t) => S.code.map((l, i) => S.type === 'pick' ? (i === S.bugLine ? t : l) : (i === S.blankLine ? l.replace('___', t) : l)).join('\n');
+
+// one fix-the-code step (pick a line / fill a blank / reorder lines). onRight() is called when the program passes.
+function stepPanel(S, head, onRight, onLeave) {
+  G.mode = 'door';
+  const fb = `<p id="fb" class="muted"></p><p><button class="btn alt" id="bHint">💡 Hint</button> <button class="btn alt" id="bLeave">Walk away</button></p>`;
+  const wrong = why => { SFX.bad(); const f = $('fb'); f.className = 'bad'; f.innerHTML = `🤔 Not quite! ${why || 'That code still has a bug.'}<br><span class="muted">💡 Hint: ${S.hint || 'Read each line slowly.'}</span>`; };
+  const right = () => { SFX.good(); onRight(); };
+  const wire = () => {
+    $('bHint').onclick = () => { const f = $('fb'); f.className = 'muted'; f.innerHTML = '💡 ' + (S.hint || 'Read each line slowly.'); };
+    $('bLeave').onclick = () => { hideCard(); G.mode = 'play'; G.room.hero.y += 8; if (onLeave) onLeave(); };
+  };
+  if (S.type === 'pick' || S.type === 'blank') {
+    const codeLines = S.code.map((l, i) => `<span class="l ${i === (S.type === 'pick' ? S.bugLine : S.blankLine) ? 'bug' : ''}"><span class="no">${i + 1}</span>${hl(l).replace('___', '<span class="blank">?</span>')}</span>`).join('');
+    const opts = shuffle(S.opts);
+    showCard(`${head}<pre class="prog">${codeLines}</pre><p>${S.type === 'pick' ? 'Pick the fixed line' : 'Pick what goes in the <span class="blank">?</span>'} with ${ctl('{pick}')}:</p>
+      <div class="opts">${opts.map((o, i) => `<button class="opt" data-n="${i + 1}" data-i="${i}"><span class="n">${i + 1}</span><code>${hl(o.t)}</code></button>`).join('')}</div>${fb}`, 'term');
+    document.querySelectorAll('.opt[data-i]').forEach(b => b.onclick = () => {
+      const o = opts[+b.dataset.i];
+      if (runOk(fixedProgram(S, o.t), S.check)) { b.classList.add('right'); right(); } else { b.classList.add('wrong'); wrong(o.why); }
+    });
+    wire();
+  } else if (S.type === 'order') {
+    let pool = shuffle(S.lines.map((t, i) => ({ t, i }))); if (pool.every((p, i) => p.i === i) && pool.length > 1) pool.reverse();
+    const prog = [];
+    const draw = () => {
+      showCard(`${head}<p>${ctl('{orderHow}')}</p><div class="cols"><div><h3>Jumbled lines</h3><div class="pool">${pool.map((p, i) => `<button class="ln" data-n="${i + 1}" data-p="${i}"><span class="n">${i + 1}</span>${hl(p.t)}</button>`).join('') || '<span class="empty">All used ✓</span>'}</div></div>
+        <div><h3>Your program</h3><div class="slots">${prog.map((p, i) => `<button class="ln" data-s="${i}">${hl(p.t)}</button>`).join('') || '<span class="empty">Tap lines to add them</span>'}</div></div></div>
+        <p><button class="btn go" id="bRun" ${pool.length ? 'disabled' : ''}>▶ Run</button></p>${fb}`, 'term');
+      document.querySelectorAll('[data-p]').forEach(b => b.onclick = () => { SFX.click(); prog.push(pool.splice(+b.dataset.p, 1)[0]); draw(); });
+      document.querySelectorAll('[data-s]').forEach(b => b.onclick = () => { pool.push(prog.splice(+b.dataset.s, 1)[0]); draw(); });
+      $('bRun').onclick = () => { if (runOk(prog.map(p => p.t).join('\n'), S.check)) right(); else wrong('The lines are in the wrong order, so the program does the wrong thing. Tap your program lines to take them back.'); };
+      wire();
+    };
+    draw();
+  }
+}
+function doorPanel(si) {
+  const L = G.room, D = L.R.door, steps = D.steps;
+  if (si >= steps.length) return doorOpened();
+  const S = steps[si];
+  const head = `<div class="muted">${D.title} · bug ${si + 1} of ${steps.length}</div><h2>${D.title}</h2>${si === 0 ? `<p>${D.story}</p>` : ''}<p class="goal">🎯 ${S.goal}</p>`;
+  stepPanel(S, head, () => { toast('✅ Bug fixed!'); doorPanel(si + 1); });
+}
+function termPanel(ti) {
+  const L = G.room, T = L.terms[ti], S = L.R.terminals[ti];
+  const n = L.terms.filter(t => t.fixed).length;
+  const head = `<div class="muted">Boss terminal ${ti + 1} of ${L.terms.length} · ${n} fixed</div><h2>💻 ${S.label}</h2><p>Fix this code to crack the Big Bug's armour!</p><p class="goal">🎯 ${S.goal}</p>`;
+  stepPanel(S, head, () => {
+    T.fixed = true; hideCard(); G.mode = 'play';
+    const B = L.boss; if (B && B.hp > 0) {
+      B.exposed += B.per; B.state = 'dizzy'; B.st = 0; SFX.bossBreak();
+      floatText(B.x + 64, B.y + 10, '💥 Armour cracked! ZAP the weak point!', '#ffd23f');
+      toast('💥 The Big Bug is dizzy! Zap the glowing weak point!', 2.6);
+    }
+  });
+}
+function doorOpened() {
+  const L = G.room; L.solved = true; hideCard(); G.mode = 'play';
+  if (L.torches.length) { // Torch Hall: run the fixed loop visibly, one torch per go
+    L.loop = { i: 0, t: 0.5, n: L.torches.length };
+    toast('🔁 Running your loop…', 2);
+    return;
+  }
+  openDoor();
+}
+function openDoor() { const L = G.room; L.open = true; SFX.door(); toast('🚪 The door is open! Walk through it.', 2.4); }
+function quiz() {
+  G.mode = 'quiz'; const R = G.room.R, Q = R.quiz, opts = shuffle(Q.opts);
+  showCard(`<div class="muted">${R.boss ? 'Final quiz' : 'Room quiz'}</div><h2>🧠 ${Q.q}</h2>${Q.code ? `<pre class="prog">${Q.code.split('\n').map(l => `<span class="l">${hl(l)}</span>`).join('')}</pre>` : ''}
+    <div class="opts">${opts.map((o, i) => `<button class="opt" data-n="${i + 1}" data-i="${i}"><span class="n">${i + 1}</span>${o.code ? `<code style="white-space:pre">${hl(o.t)}</code>` : `<span class="txt">${o.t}</span>`}</button>`).join('')}</div><p id="fb"></p>`);
+  let tries = 0;
+  document.querySelectorAll('.opt[data-i]').forEach(b => b.onclick = () => {
+    const o = opts[+b.dataset.i]; tries++;
+    if (o.ok) { SFX.win(); b.classList.add('right'); setTimeout(() => roomDone(tries === 1), 350); document.querySelectorAll('.opt[data-i]').forEach(x => x.disabled = true); }
+    else { SFX.bad(); b.classList.add('wrong'); b.disabled = true; const f = $('fb'); f.className = 'bad'; f.innerHTML = `🤔 ${o.why || 'Not that one.'} Try again!`; }
+  });
+}
+function roomDone(firstTry) {
+  const L = G.room, R = L.R, k = G.k, rec = G.save.rooms[R.id] || {};
+  G.mode = 'done';
+  G.save.rooms[R.id] = { done: true, coins: Math.max(rec.coins || 0, L.got), quiz: !!(rec.quiz || firstTry), bugs: Math.max(rec.bugs || 0, L.zapped) };
+  G.save.unlocked = Math.max(G.save.unlocked, Math.min(ROOMS.length, k + 2)); G.save.last = Math.min(ROOMS.length - 1, k + 1); saveGame();
+  const lastInDungeon = !ROOMS[k + 1] || ROOMS[k + 1].di !== R.di;
+  if (lastInDungeon) return dungeonComplete(R.di);
+  const next = k + 1 < ROOMS.length;
+  showCard(`<h2>🏆 Room cleared!</h2><p>${R.name}</p><div class="stats"><span>🪙 coins = ${L.got} / ${L.total}</span><span>🐛 bugs zapped: ${L.zapped}</span>${firstTry ? '<span>⭐ quiz right first try</span>' : ''}</div>
+    <p class="row">${next ? `<button class="btn go" id="bN">▶ Next: ${ROOMS[k + 1].name}</button> ` : ''}<button class="btn alt" id="bT">🏠 Map</button></p>`);
+  if (next) $('bN').onclick = () => { G.room = null; lesson(k + 1, 0); };
+  $('bT').onclick = titleScreen;
+}
+function dungeonComplete(di) {
+  G.mode = 'complete'; setHud(false); SFX.win();
+  const D = DUNGEONS[di], rooms = dungeonRooms(di), recs = rooms.map(R => G.save.rooms[R.id] || {});
+  const coins = recs.reduce((a, r) => a + (r.coins || 0), 0), maxCoins = rooms.reduce((a, R) => a + R.map.join('').split('c').length - 1, 0);
+  const bugs = recs.reduce((a, r) => a + (r.bugs || 0), 0), stars = recs.filter(r => r.quiz).length, done = recs.filter(r => r.done).length;
+  const next = ROOMS.findIndex(R => R.di === di + 1);
+  showCard(`${Sprites.has('logo') ? `<img class="logo small" src="${SPRITE_SHEETS.logo.src}" alt="BUG HUNTERS">` : ''}
+    <h2>🏆 Dungeon complete!</h2><p><b>${D.icon} ${D.name}</b> is bug-free. You beat <b>The Big Bug</b>!</p>
+    <div class="stats"><span>🚪 rooms: ${done} / ${rooms.length}</span><span>🪙 coins = ${coins} / ${maxCoins}</span><span>🐛 bugs zapped: ${bugs}</span><span>⭐ quizzes first try: ${stars} / ${rooms.length}</span></div>
+    <p>You learned: strings 🔤 · variables 📦 · <code>===</code> and <code>if</code> 🗝️ · <code>for</code> loops 🔥</p>
+    <p class="row">${next >= 0 ? `<button class="btn go" id="bN">▶ Next dungeon</button>` : ''}<button class="btn ${next >= 0 ? 'alt' : 'go'}" id="bT">🏠 Back to the map</button></p>
+    <p class="muted">More dungeons are coming soon!</p>`, 'complete');
+  if (next >= 0) $('bN').onclick = () => { G.room = null; lesson(next, 0); };
+  $('bT').onclick = titleScreen;
+}
+
+// ---------- the Big Bug (boss) ----------
+// simple readable loop: walk → flash "!" → attack (spit 3 slow goo balls / call one little bug) → walk …
+// fixing a terminal makes it dizzy: it stands still with its weak point showing until zapped `per` times.
+function newBoss(L, tx, ty) {
+  const R = L.R, hp = (R.boss && R.boss.hp) || 9, nT = R.terminals ? R.terminals.length : 3;
+  return { x: tx * TILE + 16 - 64, y: ty * TILE + 16 - 80, baseY: ty * TILE + 16 - 80, hp, max: hp, per: Math.ceil(hp / nT), exposed: 0,
+    state: 'walk', st: 2.5, vx: 40, atk: 0, flash: 0, dead: 0, plink: 0 };
+}
+const bossBox = B => ({ x: B.x + 22, y: B.y + 44, w: 84, h: 76 });
+function updateBoss(L, dt) {
+  const B = L.boss, h = L.hero; if (!B) return;
+  B.flash -= dt; B.plink -= dt;
+  if (B.hp <= 0) { B.dead += dt; if (B.dead > 1.6 && G.mode === 'play' && !L.solved) bossBeaten(); return; }
+  B.st -= dt;
+  if (B.state === 'dizzy') { if (B.exposed <= 0) { B.state = 'walk'; B.st = 2.5; } }
+  else if (B.state === 'walk') {
+    const tx = h.x + 12 - (B.x + 64); B.vx += Math.sign(tx) * 30 * dt; B.vx = Math.max(-45, Math.min(45, B.vx));
+    B.x += B.vx * dt; if (B.x < 80 || B.x > L.W * TILE - 208) { B.x = Math.max(80, Math.min(L.W * TILE - 208, B.x)); B.vx = -B.vx; }
+    B.y = B.baseY + Math.sin(G.t * 0.9) * 22;
+    if (B.st <= 0) { B.state = 'windup'; B.st = 1.0; floatText(B.x + 64, B.y + 4, '!', '#ff4d6a'); }
+  } else if (B.state === 'windup') {
+    if (B.st <= 0) {
+      const cx = B.x + 64, cy = B.y + 90;
+      if (B.atk % 2 === 0) { // spit 3 slow goo balls toward the hero
+        const a = Math.atan2(h.y + 12 - cy, h.x + 12 - cx);
+        for (const d of [-0.35, 0, 0.35]) L.orbs.push({ x: cx - 6, y: cy - 6, w: 12, h: 12, vx: Math.cos(a + d) * 95, vy: Math.sin(a + d) * 95, life: 6 });
+        SFX.spit();
+      } else if (L.bugs.length < 3) { // call one little fly bug
+        const b = newBug(cx - 13, cy + 8, true); if (!hitsWall(L, b, b.x, b.y)) L.bugs.push(b);
+        floatText(cx, B.y + 4, 'Bzzz!', '#9fd8ff');
+      }
+      B.atk++; B.state = 'walk'; B.st = 2.6 + Math.random();
+    }
+  }
+  if (h.inv <= 0 && overlap(h, bossBox(B), 84, 76)) { hurtHero(L); moveObj(L, h, 0, 40); }
+}
+function hitBoss(L, s) {
+  const B = L.boss;
+  if (B.exposed > 0) {
+    B.hp--; B.exposed--; B.flash = 0.35; SFX.bossHit();
+    floatText(B.x + 64, B.y + 10, B.hp > 0 ? (B.exposed > 0 ? `Ouch! ${B.exposed} more!` : 'Armour is back! Fix another terminal!') : 'NOOOO!', '#ffd23f');
+    if (B.hp <= 0) { B.exposed = 0; SFX.bossDie(); L.bugs.forEach(b => b.dead = true); L.orbs = []; L.zapped++; }
+  } else if (B.plink <= 0) {
+    B.plink = 0.6; SFX.clang();
+    floatText(B.x + 64, B.y + 10, '🛡️ Clang! Fix a terminal first', '#9fd8ff');
+  }
+}
+function bossBeaten() {
+  const L = G.room; L.solved = true; L.open = true; G.mode = 'victory'; SFX.win();
+  showCard(`<h2>🎉 You beat the Big Bug!</h2>${Sprites.has('boss') ? `<div class="bossdone" style="background-image:url(${SPRITE_SHEETS.boss.src})"></div>` : ''}
+    <p>You fixed all ${L.terms.length} terminals and zapped its weak point ${L.boss.max} times.</p>
+    <div class="stats"><span>🪙 coins = ${L.got} / ${L.total}</span><span>🐛 bugs zapped: ${L.zapped}</span><span>❤️ hearts left: ${L.hero.hp}</span></div>
+    <p>One last quiz to finish the dungeon!</p><p><button class="btn go" id="bQ">🧠 Final quiz</button></p>`, 'victory');
+  $('bQ').onclick = () => { SFX.click(); quiz(); };
+}
+
+// ---------- gameplay ----------
+function zap() {
+  const h = G.room.hero; if (h.cd > 0) return; h.cd = 0.28;
+  const d = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] }[h.dir];
+  G.room.shots.push({ x: h.x + 8, y: h.y + 8, w: 8, h: 8, vx: d[0] * 360, vy: d[1] * 360, life: 0.7 }); SFX.zap();
+}
+function hurtHero(L) {
+  const h = L.hero; if (h.inv > 0) return;
+  h.hp--; h.inv = 1.5; SFX.hurt(); hud();
+  if (h.hp > 0) return;
+  if (isBossRoom(L)) { // forgiving: keep fixed terminals and boss damage, just go back to the start
+    h.hp = 3; h.inv = 2; h.x = L.start.x; h.y = L.start.y; L.orbs = []; L.bugs = L.bugs.filter(b => !b.fly);
+    toast('Ouch! Back to the start. Your fixes are saved!', 2.4); hud();
+  } else { toast('Ouch! The bugs got you. Room restarted.', 2); const k = G.k; G.room = buildRoom(k); hud(); }
+}
+let doorMsgT = 0;
+function update(dt) {
+  document.body.classList.toggle('st-play', G.mode === 'play');
+  G.t += dt; const L = G.room; if (!L) return;
+  L.floats.forEach(f => { f.t -= dt; f.y -= dt * 18; }); L.floats = L.floats.filter(f => f.t > 0);
+  if (G.mode !== 'play') return;
+  const h = L.hero; h.cd -= dt; h.inv -= dt; doorMsgT -= dt;
+  let mx = joy.x + ((keys.arrowright || keys.d) ? 1 : 0) - ((keys.arrowleft || keys.a) ? 1 : 0);
+  let my = joy.y + ((keys.arrowdown || keys.s) ? 1 : 0) - ((keys.arrowup || keys.w) ? 1 : 0);
+  const m = Math.hypot(mx, my); if (m > 1) { mx /= m; my /= m; }
+  h.moving = m > 0.1;
+  if (h.moving) { h.dir = Math.abs(mx) > Math.abs(my) ? (mx > 0 ? 'right' : 'left') : (my > 0 ? 'down' : 'up'); h.f += dt * 8; }
+  const hit = moveObj(L, h, mx * 130 * dt, my * 130 * dt);
+  if (hit && hit.c === 'T') { const T = L.terms.find(t => t.x === hit.x && t.y === hit.y); if (T && !T.fixed && L.boss && L.boss.hp > 0) { h.y += 4; return termPanel(T.i); } else if (T && T.fixed && doorMsgT <= 0) { doorMsgT = 1.5; floatText(T.x * TILE + 16, T.y * TILE, '✅ Already fixed', '#2ee6a6'); } }
+  if (hit && hit.c === 'D' && !L.solved) {
+    if (L.R.door.lock === 'boss') { if (doorMsgT <= 0) { doorMsgT = 1.5; SFX.locked(); floatText(hit.x * TILE + 32, TILE * 1.5, '🔒 Beat the Big Bug first!', '#ff6b81'); } }
+    else { h.y += 4; return doorPanel(0); }
+  }
+  if (L.open && h.y < TILE * 0.6) return isBossRoom(L) ? null : quiz();
+  if (L.loop) {
+    L.loop.t -= dt;
+    if (L.loop.t <= 0) {
+      if (L.loop.i < L.loop.n) { const T = L.torches[L.loop.i]; L.lit[L.loop.i] = true; SFX.torch(); floatText(T.x * TILE + 16, TILE * 2.2, `lightTorch(${L.loop.i})`, '#ffd23f'); L.loop.i++; L.loop.t = 0.75; }
+      else { L.loop = null; openDoor(); }
+    }
+  }
+  L.coins = L.coins.filter(c => { if (overlap(h, c)) { L.got++; SFX.coin(); hud(); return false; } return true; });
+  L.hearts = L.hearts.filter(c => { if (overlap(h, c) && h.hp < 5) { h.hp++; SFX.heart(); hud(); return false; } return true; });
+  updateBoss(L, dt);
+  for (const b of L.bugs) {
+    b.tm -= dt;
+    if (b.tm <= 0) {
+      b.tm = 0.8 + Math.random() * 1.5; const sp = (L.R.bugSpeed || 40) * (b.fly ? 1.1 : 1);
+      if (Math.random() < (L.R.chase || 0)) { const dx = h.x - b.x, dy = h.y - b.y, d = Math.hypot(dx, dy) || 1; b.vx = dx / d * sp; b.vy = dy / d * sp; }
+      else { const a = Math.random() * 7; b.vx = Math.cos(a) * sp; b.vy = Math.sin(a) * sp; }
+    }
+    if (moveObj(L, b, b.vx * dt, b.vy * dt)) b.tm = 0;
+    if (b.vx) b.dir = b.vx > 0 ? 1 : -1;
+    if (h.inv <= 0 && overlap(h, b, b.w, b.h)) hurtHero(L);
+  }
+  for (const o of L.orbs) {
+    o.x += o.vx * dt; o.y += o.vy * dt; o.life -= dt;
+    if (hitsWall(L, o, o.x, o.y)) o.life = 0;
+    if (o.life > 0 && h.inv <= 0 && overlap(h, o, o.w, o.h)) { o.life = 0; hurtHero(L); }
+  }
+  for (const s of L.shots) {
+    s.x += s.vx * dt; s.y += s.vy * dt; s.life -= dt;
+    if (hitsWall(L, s, s.x, s.y)) s.life = 0;
+    for (const b of L.bugs) if (s.life > 0 && !b.dead && overlap(s, b, b.w, b.h)) { b.dead = true; s.life = 0; L.zapped++; SFX.squash(); L.fx.push({ x: b.x - 3, y: b.y - 3, t: 0.45 }); }
+    for (const o of L.orbs) if (s.life > 0 && o.life > 0 && overlap(s, o, o.w, o.h)) { o.life = 0; s.life = 0; SFX.squash(); }
+    if (s.life > 0 && L.boss && L.boss.hp > 0) { const bb = bossBox(L.boss); if (overlap(s, bb, bb.w, bb.h)) { s.life = 0; hitBoss(L, s); } }
+  }
+  L.bugs = L.bugs.filter(b => !b.dead); L.shots = L.shots.filter(s => s.life > 0); L.orbs = L.orbs.filter(o => o.life > 0);
+  L.fx.forEach(f => f.t -= dt); L.fx = L.fx.filter(f => f.t > 0);
+}
+
+// ---------- drawing ----------
+function drawTile(L, x, y, pal) {
+  const c = L.grid[y * L.W + x], px = x * TILE, py = y * TILE, seed = x * 7 + y * 13, art = Sprites.has('tiles');
+  const wallish = c === '#' || c === 'i' || c === 't' || c === 'D';
+  if (!art) { // code-drawn fallback
+    Sprites.draw('tiles', 'floor', (x + y) & 1, px, py, { pal, seed });
+    if (c === '#' || c === 'i') Sprites.draw('tiles', c === 'i' ? 'walltorch' : 'wall', 0, px, py, { pal, t: G.t, top: cell(L, x, y + 1) !== '#' });
+    else if (c === 't') { Sprites.draw('tiles', 'wall', 0, px, py, { pal, t: G.t, top: true }); Sprites.draw('tiles', 'torch', L.lit[L.torches.findIndex(T => T.x === x && T.y === y)] ? 1 : 0, px, py, { t: G.t, n: '' }); }
+    else if (c === 'o') Sprites.draw('tiles', 'crate', 0, px, py, { pal });
+    else if (c === 'T') Sprites.draw('tiles', 'terminal', (L.terms.find(t => t.x === x && t.y === y) || {}).fixed ? 1 : 0, px, py, { t: G.t });
+    return;
+  }
+  if (!wallish) Sprites.tile(((seed * 31) % 11) < 3 ? TI.floorB : TI.floorA, px, py);
+  if (wallish) {
+    if (y === L.H - 1) { ctx.fillStyle = '#2a2350'; ctx.fillRect(px, py, 32, 32); ctx.fillStyle = '#4b3d8f'; ctx.fillRect(px, py, 32, 4); return; }
+    if (y === 0 && x === 0) Sprites.tile(TI.corner, px, py);
+    else if (y === 0 && x === L.W - 1) Sprites.tile(TI.corner, px, py, true);
+    else if (x === 0 || x === L.W - 1) { Sprites.tile(TI.floorA, px, py); Sprites.tile(TI.wallSide, px, py, x === L.W - 1); }
+    else if (cell(L, x, y + 1) === '#' || y > 0) { ctx.fillStyle = '#2a2350'; ctx.fillRect(px, py, 32, 32); ctx.fillStyle = '#4b3d8f'; ctx.fillRect(px, py, 32, 4); }
+    else Sprites.tile(TI.wallTop, px, py);
+    if (c === 'i') Sprites.tile(Math.floor(G.t * 6) % 2 ? TI.torch1 : TI.torch0, px, py);
+    if (c === 't') {
+      const n = L.torches.findIndex(T => T.x === x && T.y === y), lit = L.lit[n];
+      if (lit) { ctx.fillStyle = 'rgba(255,190,80,.22)'; ctx.beginPath(); ctx.arc(px + 16, py + 14, 26, 0, 7); ctx.fill(); Sprites.tile(Math.floor(G.t * 6 + n) % 2 ? TI.torch1 : TI.torch0, px, py); }
+      else Sprites.tile(TI.torch0, px, py, false, [19, 13]);
+      ctx.fillStyle = lit ? '#ffd23f' : '#c9c6ee'; ctx.font = 'bold 11px monospace'; ctx.textAlign = 'center'; ctx.fillText(String(n), px + 16, py + 44); ctx.textAlign = 'left';
+    }
+  } else if (c === 'o') Sprites.tile(TI.crate, px, py);
+  else if (c === 'T') {
+    const T = L.terms.find(t => t.x === x && t.y === y);
+    const p = 0.5 + Math.sin(G.t * 5) * 0.5;
+    ctx.fillStyle = T && T.fixed ? 'rgba(46,230,166,.28)' : `rgba(255,77,106,${0.18 + 0.2 * p})`; ctx.beginPath(); ctx.ellipse(px + 16, py + 24, 22, 12, 0, 0, 7); ctx.fill();
+    Sprites.tile(TI.terminal, px, py);
+    ctx.font = 'bold 9px monospace'; ctx.textAlign = 'center'; ctx.fillStyle = T && T.fixed ? '#2ee6a6' : '#ff6b81'; ctx.fillText(T && T.fixed ? 'OK ✓' : 'BUG!', px + 16, py - 3); ctx.textAlign = 'left';
+  }
+}
+function drawDoor(L) {
+  if (!L.doors.length) return;
+  const d = L.doors[0], px = d.x * TILE + (L.doors.length > 1 ? 16 : 0), py = d.y * TILE;
+  if (Sprites.has('tiles')) {
+    Sprites.tile(L.open ? TI.doorOpen : TI.doorLocked, px, py);
+    if (L.open) Sprites.draw('key', 'spin', Math.floor(G.t * 10), px, py + 36, {});
+    return;
+  }
+  for (const dd of L.doors) {
+    const qx = dd.x * TILE, qy = dd.y * TILE;
+    if (L.open) { ctx.fillStyle = '#000'; ctx.fillRect(qx, qy, 32, 32); ctx.fillStyle = 'rgba(46,230,166,.25)'; ctx.fillRect(qx, qy + 20, 32, 12); }
+    else { ctx.fillStyle = '#6b4020'; ctx.fillRect(qx, qy, 32, 32); ctx.fillStyle = '#8a5530'; for (let i = 0; i < 4; i++) ctx.fillRect(qx + 2 + i * 8, qy + 2, 6, 30);
+      ctx.fillStyle = '#ffd23f'; ctx.fillRect(qx + 12, qy + 14, 8, 8); ctx.fillStyle = '#ff4d6a'; ctx.font = 'bold 9px monospace'; ctx.fillText('{ }', qx + 8, qy + 11); }
+  }
+}
+function drawBoss(L) {
+  const B = L.boss; if (!B) return;
+  if (B.hp <= 0 && B.dead > 1.2) return;
+  const shake = B.state === 'windup' ? Math.sin(G.t * 60) * 2 : 0, x = B.x + shake, y = B.y;
+  ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.beginPath(); ctx.ellipse(x + 64, y + 122, 52, 10, 0, 0, 7); ctx.fill();
+  if (B.hp <= 0) ctx.globalAlpha = Math.max(0, 1 - B.dead / 1.2);
+  const hit = B.flash > 0 || B.hp <= 0;
+  if (Sprites.has('boss')) Sprites.draw('boss', hit ? 'hit' : 'idle', hit ? Math.floor(G.t * 12) : Math.floor(G.t * 5), x, y, { scale: 2, flip: B.vx > 0 && B.state === 'walk' });
+  else Sprites.draw('boss', hit ? 'hit' : 'idle', 0, x, y, { scale: 2, t: G.t, boss: { weak: [{ ox: 0, oy: 10, state: B.exposed > 0 ? 'open' : 'armor', hp: B.exposed }] } });
+  ctx.globalAlpha = 1;
+  if (B.hp > 0) {
+    const cx = x + 64, cy = y + 92;
+    if (B.exposed > 0) { // glowing weak point + dizzy stars
+      const p = 0.6 + Math.sin(G.t * 8) * 0.4;
+      ctx.fillStyle = `rgba(255,210,63,${0.35 * p})`; ctx.beginPath(); ctx.arc(cx, cy, 20, 0, 7); ctx.fill();
+      ctx.fillStyle = '#ffd23f'; ctx.beginPath(); ctx.arc(cx, cy, 9, 0, 7); ctx.fill(); ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(cx - 3, cy - 3, 3, 0, 7); ctx.fill();
+      ctx.strokeStyle = '#ffd23f'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(cx, cy, 15 + p * 4, 0, 7); ctx.stroke();
+      for (let i = 0; i < 3; i++) { const a = G.t * 3 + i * 2.1; ctx.fillStyle = '#fff6c4'; ctx.fillRect(cx + Math.cos(a) * 30 - 2, y + 14 + Math.sin(a) * 6, 4, 4); }
+    } else { // armour bubble
+      ctx.strokeStyle = `rgba(159,216,255,${0.35 + Math.sin(G.t * 3) * 0.1})`; ctx.lineWidth = 3; ctx.beginPath(); ctx.ellipse(cx, y + 74, 62, 56, 0, 0, 7); ctx.stroke();
+      ctx.fillStyle = 'rgba(159,216,255,.08)'; ctx.fill();
+    }
+  }
+}
+function drawBossBar(L) {
+  const B = L.boss; if (!B) return;
+  const w = 300, x = (L.W * TILE - w) / 2, y = (L.H - 1) * TILE + 6;
+  ctx.fillStyle = 'rgba(10,8,24,.85)'; ctx.fillRect(x - 4, y - 2, w + 8, 24);
+  ctx.fillStyle = '#fff'; ctx.font = 'bold 10px sans-serif'; ctx.fillText(`👾 ${L.R.boss.name}`, x, y + 9);
+  const seg = (w - 100) / B.max;
+  for (let i = 0; i < B.max; i++) { ctx.fillStyle = i < B.hp ? (B.flash > 0 ? '#fff' : '#ff4d6a') : '#3d3870'; ctx.fillRect(x + 96 + i * seg, y + 2, seg - 3, 14); }
+  ctx.fillStyle = '#c9c6ee'; ctx.font = 'bold 9px sans-serif'; ctx.fillText(B.hp <= 0 ? '💀 beaten!' : B.exposed > 0 ? 'WEAK POINT OPEN!' : '🛡️ armoured', x, y + 19);
+}
+function drawLoopPanel(L) {
+  if (!L.loop && !(L.lit.length && L.lit.length < L.torches.length)) return;
+  const i = L.loop ? L.loop.i : L.lit.length, w = 330, x = (L.W * TILE - w) / 2, y = TILE * 3;
+  ctx.fillStyle = 'rgba(15,12,34,.9)'; ctx.fillRect(x, y, w, 40); ctx.strokeStyle = '#2ee6a6'; ctx.lineWidth = 2; ctx.strokeRect(x, y, w, 40);
+  ctx.font = 'bold 12px monospace'; ctx.fillStyle = '#ff9ecd'; ctx.fillText('for', x + 10, y + 16); ctx.fillStyle = '#e8e9ff';
+  ctx.fillText(` (let i = 0; i < ${L.torches.length}; i++)`, x + 34, y + 16);
+  ctx.fillStyle = '#ffd23f'; ctx.fillText(i < L.torches.length ? `i = ${i}  →  lightTorch(${i})` : `i = ${i}  →  ${i} < ${i} is false: stop!`, x + 10, y + 33);
+}
+function render() {
+  const W = cv.width, H = cv.height, L = G.room;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const pal = (L ? L.R.dungeon : DUNGEONS[0]).pal;
+  ctx.fillStyle = pal.bg || '#0d0a1c'; ctx.fillRect(0, 0, W, H);
+  if (!L) { // title backdrop: drifting bugs
+    const s = Math.max(1, Math.round(Math.min(W, H) / 300));
+    ctx.imageSmoothingEnabled = false;
+    for (let i = 0; i < 8; i++) { const x = (i * 197 * s + G.t * 40 * s) % (W + 60 * s) - 30 * s, y = (i * 113 * s) % H; Sprites.draw(i % 3 ? 'bug' : 'fly', i % 3 ? 'walk' : 'fly', Math.floor(G.t * 8 + i), x, y, { scale: s, dir: 1, t: G.t + i }); }
+    return;
+  }
+  const mw = L.W * TILE, mh = L.H * TILE, sc = Math.min(W / mw, H / mh);
+  ctx.setTransform(sc, 0, 0, sc, Math.round((W - mw * sc) / 2), Math.round((H - mh * sc) / 2));
+  ctx.imageSmoothingEnabled = false;
+  for (let y = 0; y < L.H; y++) for (let x = 0; x < L.W; x++) drawTile(L, x, y, pal);
+  drawDoor(L);
+  for (const c of L.coins) Sprites.draw('items', 'coin', 0, c.x, c.y, { t: G.t + c.x });
+  for (const c of L.hearts) Sprites.draw('items', 'heart', 0, c.x, c.y, { t: G.t });
+  drawBoss(L);
+  for (const b of L.bugs) {
+    if (b.fly) { ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.beginPath(); ctx.ellipse(b.x + 13, b.y + 28, 9, 3, 0, 0, 7); ctx.fill(); Sprites.draw('fly', 'fly', Math.floor(G.t * 12), b.x - 3, b.y - 8 + Math.sin(G.t * 6 + b.x) * 2, { flip: b.dir < 0, dir: b.dir, t: G.t, col: '#5ab0ff' }); }
+    else Sprites.draw('bug', 'walk', Math.floor(G.t * 8 + b.x), b.x - 3, b.y - 3, { flip: b.dir < 0, dir: b.dir, t: G.t });
+  }
+  for (const o of L.orbs) { ctx.fillStyle = 'rgba(232,52,140,.35)'; ctx.beginPath(); ctx.arc(o.x + 6, o.y + 6, 10, 0, 7); ctx.fill(); ctx.fillStyle = '#e8348c'; ctx.beginPath(); ctx.arc(o.x + 6, o.y + 6, 6, 0, 7); ctx.fill(); ctx.fillStyle = '#ffc2d6'; ctx.fillRect(o.x + 3, o.y + 3, 3, 3); }
+  for (const s of L.shots) { ctx.fillStyle = '#ffd23f'; ctx.fillRect(s.x, s.y, 8, 8); ctx.fillStyle = '#fff'; ctx.fillRect(s.x + 2, s.y + 2, 4, 4); }
+  for (const f of L.fx) Sprites.draw('squash', 'squash', Math.min(2, Math.floor((0.45 - f.t) / 0.15)), f.x, f.y, {});
+  const h = L.hero;
+  // soft light under the hero so they never blend into the purple walls/floor
+  const gx = h.x + 12, gy = h.y + 20, gr = ctx.createRadialGradient(gx, gy, 2, gx, gy, 26);
+  gr.addColorStop(0, 'rgba(255,244,214,.55)'); gr.addColorStop(1, 'rgba(255,244,214,0)');
+  ctx.fillStyle = gr; ctx.beginPath(); ctx.ellipse(gx, gy, 26, 18, 0, 0, 7); ctx.fill();
+  if (!(h.inv > 0 && Math.floor(G.t * 12) % 2)) {
+    if (h.moving || !Sprites.has('heroIdle')) Sprites.draw('hero', h.dir, h.moving ? Math.floor(h.f) : 0, h.x - 4, h.y - 6);
+    else Sprites.draw('heroIdle', h.dir, 0, h.x - 4, h.y - 6);
+  }
+  drawLoopPanel(L);
+  if (L.boss) drawBossBar(L);
+  ctx.textAlign = 'center'; ctx.font = 'bold 13px sans-serif'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(10,8,24,.9)';
+  for (const f of L.floats) { ctx.globalAlpha = Math.min(1, f.t * 2); ctx.strokeText(f.txt, f.x, f.y); ctx.fillStyle = f.col; ctx.fillText(f.txt, f.x, f.y); }
+  ctx.globalAlpha = 1; ctx.textAlign = 'left';
+}
+let lastT = performance.now();
+function frame(now) { const dt = Math.min(0.05, (now - lastT) / 1000); lastT = now; try { update(dt); render(); } catch (e) { console.error(e); } requestAnimationFrame(frame); }
+
+// ---------- boot ----------
+G.save = loadSave(); Sprites.load(); resize(); refreshCtl(); syncFsUi();
+if (DEV.type !== 'desktop' || matchMedia('(pointer: coarse)').matches) goTouch();
+$('loading').style.display = 'none';
+titleScreen();
+// re-show the title once the logo image has decoded
+setTimeout(() => { if (G.mode === 'title' && Sprites.has('logo') && !document.querySelector('#card img.logo')) titleScreen(); }, 150);
+requestAnimationFrame(frame);
+
+</script>
+</body>
+</html>
